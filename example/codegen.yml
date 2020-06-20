@@ -1,5 +1,5 @@
 overwrite: true
-schema: "schema.graphql"
+schema: "https://countries.trevorblades.com/"
 documents: "src/**/*.graphql"
 generates:
   src/generated/graphql.tsx:
@@ -7,6 +7,12 @@ generates:
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
+    config:
+          withHooks: false
+          withHOC: false
+          withComponent: false
+          exportFragmentSpreadSubTypes: true
+          documentMode: graphQLTag
   src/generated/page.tsx:
     config:
       documentMode: external
@@ -16,12 +22,6 @@ generates:
       # excludePatternsOptions: 'i'
       # customDataIdFromObjectName: 'test'
       # customDataIdFromObjectImport: 'abc'
-      generateQueriesWrite: false
-      generateQueriesRead: true
-      generateFragmentsRead: true
-      generateFragmentsWrite: false
-      pre: 'try{'
-      post: '}catch(e){console.log(e); return null}'
     preset: import-types
     presetConfig:
       typesPath: ./graphql

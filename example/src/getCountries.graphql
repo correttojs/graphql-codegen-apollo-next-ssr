@@ -1,0 +1,6 @@
+query getCountries {
+  countries {
+    name
+    phone
+  }
+}

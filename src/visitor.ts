@@ -130,7 +130,7 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
                    
             }; `;
 
-    const getSSP = `export const getServerPage${pageOperation} = async (options: Apollo.QueryOptions<${operationVariablesTypes}>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>) => {
+    const getSSP = `export const getServerPage${pageOperation} = async (options: Omit<Apollo.QueryOptions<${operationVariablesTypes}>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>) => {
         await apolloClient.query({ ...options, query:Operations.${documentVariableName} });
         const apolloState = apolloClient.cache.extract();
         return {
