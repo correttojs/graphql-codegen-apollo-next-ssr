@@ -1,0 +1,26 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
+    "next": "^9.4.4",
+    "react": "^16.13.1"
+  },
+  "devDependencies": {
+    "@apollo/client": "^3.0.0-rc.6",
+    "@graphql-codegen/cli": "1.15.4",
+    "@graphql-codegen/import-types-preset": "^1.15.4",
+    "@graphql-codegen/typescript": "1.15.4",
+    "@graphql-codegen/typescript-operations": "1.15.4",
+    "@graphql-codegen/typescript-react-apollo": "1.15.4",
+    "@types/react": "^16.9.38"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "codegen": "graphql-codegen --config codegen.yml"
+  },
+  "author": "",
+  "license": "ISC"
+}

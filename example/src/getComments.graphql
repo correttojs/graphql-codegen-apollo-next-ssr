@@ -1,0 +1,14 @@
+query getComments {
+  comments {
+    message
+    user {
+      ...UserMessage
+    }
+  }
+}
+
+fragment UserMessage on User {
+  name
+  surname
+  address
+}

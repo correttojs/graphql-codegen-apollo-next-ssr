@@ -1,0 +1,5 @@
+node_modules
+build
+.vscode
+example/src/generated
+example/node_modules

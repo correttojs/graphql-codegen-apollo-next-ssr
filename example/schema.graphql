@@ -1,0 +1,16 @@
+extend type Query {
+  users: [User]
+  comments: [Comment]
+}
+
+type User {
+  name: String
+  surname: String
+  address: String
+  age: Int
+}
+
+type Comment {
+  user: User
+  message: String
+}

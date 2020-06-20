@@ -1,0 +1,29 @@
+overwrite: true
+schema: "schema.graphql"
+documents: "src/**/*.graphql"
+generates:
+  src/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+  src/generated/page.tsx:
+    config:
+      documentMode: external
+      importDocumentNodeExternallyFrom: ./graphql
+      apolloVersion: 2
+      # excludePatterns: 'getComments'
+      # excludePatternsOptions: 'i'
+      # customDataIdFromObjectName: 'test'
+      # customDataIdFromObjectImport: 'abc'
+      generateQueriesWrite: false
+      generateQueriesRead: true
+      generateFragmentsRead: true
+      generateFragmentsWrite: false
+      pre: 'try{'
+      post: '}catch(e){console.log(e); return null}'
+    preset: import-types
+    presetConfig:
+      typesPath: ./graphql
+    plugins:
+      - "../build/src/index.js"
