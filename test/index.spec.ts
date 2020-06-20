@@ -185,15 +185,14 @@ describe("Apollo Next SSr", () => {
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
- export const getServerPageSubmitRepository = async (options: Apollo.QueryOptions<SubmitRepositoryMutationVariables>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>) => {
+export const getServerPageSubmitRepository = async (options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>) => {
              await apolloClient.query({ ...options, query:Operations.SubmitRepositoryDocument });
              const apolloState = apolloClient.cache.extract();
              return {
                  props: {
                      apolloState,
                  },
-             };
-           }`);
+             };`);
       expect(content.content).toBeSimilarStringTo(
         `export type PageFeedComp = React.FC<{data: FeedQuery, error: Apollo.ApolloError}>;`
       );
@@ -204,57 +203,6 @@ describe("Apollo Next SSr", () => {
                      return <WrappedComponent {...props} data={data} error={error} /> ;
                         
                  }; `);
-      await validateTypeScript(content, schema, docs, {});
-    });
-
-    it("Should exclude query patterns", async () => {
-      const documents = parse(/* GraphQL */ `
-        query feed {
-          feed {
-            id
-            commentCount
-            repository {
-              full_name
-              html_url
-              owner {
-                avatar_url
-              }
-            }
-          }
-        }
-
-        mutation submitRepository($name: String) {
-          submitRepository(repoFullName: $name) {
-            id
-          }
-        }
-      `);
-      const docs = [{ location: "", document: documents }];
-
-      const content = (await plugin(
-        schema,
-        docs,
-        { excludePatterns: "feed", excludePatternsOptions: "i" },
-        {
-          outputFile: "graphql.tsx",
-        }
-      )) as Types.ComplexPluginOutput;
-
-      expect(content.content).not.toBeSimilarStringTo(`
-export function readQueryFeed(cache: Apollo.ApolloClient<NormalizedCacheObject>, variables?: FeedQueryVariables):FeedQuery {
-                 return cache.readQuery({
-                    query: Operations.FeedDocument,
-                     variables,
-                 });
-                 };`);
-      expect(content.content).not.toBeSimilarStringTo(`
-export function writeQueryFeed(cache: Apollo.ApolloClient<NormalizedCacheObject>, data: FeedQuery, variables?: FeedQueryVariables) {
-                 cache.writeQuery({
-                     query: Operations.FeedDocument,
-                     variables,
-                     data,
-                 });
-             }`);
       await validateTypeScript(content, schema, docs, {});
     });
   });
