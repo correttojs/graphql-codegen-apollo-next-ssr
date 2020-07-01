@@ -160,12 +160,12 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
     operationVariablesTypes =
       this._externalImportPrefix + operationVariablesTypes;
 
-    const cache = this._buildOperationPageQuery(
+    const pageOperation = this._buildOperationPageQuery(
       node,
       documentVariableName,
       operationResultType,
       operationVariablesTypes
     );
-    return [cache].join("\n");
+    return [pageOperation].join("\n");
   }
 }

@@ -56,7 +56,26 @@ describe("Apollo Next SSr", () => {
   };
 
   describe("Imports", () => {
-    it("should import apollo-cache-inmemory and apollo-client dependencies", async () => {
+    it("should import nextjs dependencies", async () => {
+      const docs = [{ location: "", document: basicDoc }];
+      const content = (await plugin(
+        schema,
+        docs,
+        {},
+        {
+          outputFile: "graphql.tsx",
+        }
+      )) as Types.ComplexPluginOutput;
+
+      expect(content.prepend).toContain("import { NextPage } from 'next';");
+
+      expect(content.prepend).toContain(
+        "import { NextRouter, useRouter } from 'next/router'"
+      );
+      await validateTypeScript(content, schema, docs, {});
+    });
+
+    it("should import apollo v2 dependencies", async () => {
       const docs = [{ location: "", document: basicDoc }];
       const content = (await plugin(
         schema,
@@ -70,12 +89,16 @@ describe("Apollo Next SSr", () => {
       expect(content.prepend).toContain("import gql from 'graphql-tag';");
 
       expect(content.prepend).toContain(
+        "import { QueryHookOptions, useQuery } from '@apollo/react-hooks';"
+      );
+
+      expect(content.prepend).toContain(
         "import * as Apollo from 'apollo-client';"
       );
       await validateTypeScript(content, schema, docs, {});
     });
 
-    it("should import custom apollo-cache-inmemory and apollo-client dependencies", async () => {
+    it("should import custom apollo  dependencies", async () => {
       const docs = [{ location: "", document: basicDoc }];
       const content = (await plugin(
         schema,
