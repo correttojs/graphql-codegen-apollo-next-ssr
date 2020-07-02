@@ -34,6 +34,41 @@ export type Config = {
   apolloReactHooksImportFrom?: string;
 
   /**
+   * @description Customized the output by enabling/disabling the HOC.
+   * @default true
+   *
+   * @exampleMarkdown
+   * ```yml
+   * generates:
+   * path/to/file.ts:
+   *  plugins:
+   *    - typescript
+   *    - typescript-operations
+   *    - typescript-react-apollo
+   *  config:
+   *    withHOC: false
+   * ```
+   */
+  withHOC?: boolean;
+  /**
+   * @description Customized the output by enabling/disabling the generated React Hooks.
+   * @default false
+   *
+   * @exampleMarkdown
+   * ```yml
+   * generates:
+   * path/to/file.ts:
+   *  plugins:
+   *    - typescript
+   *    - typescript-operations
+   *    - typescript-react-apollo
+   *  config:
+   *    withHooks: false
+   * ```
+   */
+  withHooks?: boolean;
+
+  /**
    * @description Sets the version of react-apollo.
    * @default 2
    *

@@ -226,7 +226,67 @@ export const getServerPageSubmitRepository = async (options: Omit<Apollo.QueryOp
                      return <WrappedComponent {...props} data={data} error={error} /> ;
                         
                  }; `);
+      expect(content.content).not.toBeSimilarStringTo(`
+    export const useFeed`);
       await validateTypeScript(content, schema, docs, {});
     });
+  });
+
+  it("Should generate getServerPage and usePage for query", async () => {
+    const documents = parse(/* GraphQL */ `
+      query feed {
+        feed {
+          id
+          commentCount
+          repository {
+            full_name
+            html_url
+            owner {
+              avatar_url
+            }
+          }
+        }
+      }
+
+      mutation submitRepository($name: String) {
+        submitRepository(repoFullName: $name) {
+          id
+        }
+      }
+    `);
+    const docs = [{ location: "", document: documents }];
+
+    const content = (await plugin(
+      schema,
+      docs,
+      {
+        withHooks: true,
+        withHOC: false,
+      },
+      {
+        outputFile: "graphql.tsx",
+      }
+    )) as Types.ComplexPluginOutput;
+
+    expect(content.content).toBeSimilarStringTo(`
+export const getServerPageSubmitRepository = async (options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>) => {
+             await apolloClient.query({ ...options, query:Operations.SubmitRepositoryDocument });
+             const apolloState = apolloClient.cache.extract();
+             return {
+                 props: {
+                     apolloState,
+                 },
+             };`);
+    expect(content.content).toBeSimilarStringTo(
+      `export type PageFeedComp = React.FC<{data: FeedQuery, error: Apollo.ApolloError}>;`
+    );
+    expect(content.content).toBeSimilarStringTo(`
+  export const useFeed = (
+       optionsFunc?: (router: NextRouter)=> QueryHookOptions<FeedQuery, FeedQueryVariables>) => {
+       const router = useRouter();
+       const options = optionsFunc ? optionsFunc(router) : {};
+       return useQuery(Operations.FeedDocument, options);
+     };`);
+    await validateTypeScript(content, schema, docs, {});
   });
 });

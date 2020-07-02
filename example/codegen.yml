@@ -18,6 +18,8 @@ generates:
       documentMode: external
       importDocumentNodeExternallyFrom: ./graphql
       reactApolloVersion: 2
+      withHooks: true
+      # withHOC: false
       # excludePatterns: 'getComments'
       # excludePatternsOptions: 'i'
       # customDataIdFromObjectName: 'test'

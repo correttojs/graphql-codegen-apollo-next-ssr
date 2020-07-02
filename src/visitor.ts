@@ -61,6 +61,8 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
       pre: getConfigValue(rawConfig.pre, ""),
       post: getConfigValue(rawConfig.post, ""),
       customImports: getConfigValue(rawConfig.customImports, null),
+      withHOC: getConfigValue(rawConfig.withHOC, true),
+      withHooks: getConfigValue(rawConfig.withHooks, false),
     });
 
     this._externalImportPrefix = this.config.importOperationTypesFrom
@@ -125,12 +127,23 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
 
     const WrappedComp = `export type Page${pageOperation}Comp = React.FC<{data: ${operationResultType}, error: Apollo.ApolloError}>;`;
 
-    const pageQueryString = `export const withPage${pageOperation} = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) => (WrappedComponent:Page${pageOperation}Comp) : NextPage  => (props) => {
+    const pageQueryString = this.config.withHOC
+      ? `export const withPage${pageOperation} = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) => (WrappedComponent:Page${pageOperation}Comp) : NextPage  => (props) => {
                 const router = useRouter()
                 const {data, error } = useQuery(Operations.${documentVariableName}, optionsFunc(router))    
                 return <WrappedComponent {...props} data={data} error={error} /> ;
                    
-            }; `;
+            }; `
+      : "";
+
+    const pageHook = this.config.withHooks
+      ? `export const use${pageOperation} = (
+  optionsFunc?: (router: NextRouter)=> QueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) => {
+  const router = useRouter();
+  const options = optionsFunc ? optionsFunc(router) : {};
+  return useQuery(Operations.${documentVariableName}, options);
+};`
+      : "";
 
     const getSSP = `export const getServerPage${pageOperation} = async (options: Omit<Apollo.QueryOptions<${operationVariablesTypes}>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>) => {
         await apolloClient.query({ ...options, query:Operations.${documentVariableName} });
@@ -144,9 +157,10 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
 
     const ssr = `export const ssr${pageOperation} = {
       getServerPage: getServerPage${pageOperation},
-      withPage: withPage${pageOperation}
+      ${this.config.withHOC ? `withPage: withPage${pageOperation},` : ""}
+      ${this.config.withHooks ? `usePage: use${pageOperation},` : ""}
     }`;
-    return [getSSP, WrappedComp, pageQueryString, ssr]
+    return [getSSP, pageHook, WrappedComp, pageQueryString, ssr]
       .filter((a) => a)
       .join("\n");
   }
