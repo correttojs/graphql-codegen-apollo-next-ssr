@@ -30,18 +30,20 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
     super(schema, fragments, rawConfig, {
       apolloReactCommonImportFrom: getConfigValue(
         rawConfig.apolloReactCommonImportFrom,
-        rawConfig.apolloVersion === 3
+        rawConfig.reactApolloVersion === 3
           ? "@apollo/client"
           : "@apollo/react-common"
       ),
 
       apolloReactHooksImportFrom: getConfigValue(
         rawConfig.apolloReactHooksImportFrom,
-        rawConfig.apolloVersion === 3 ? "@apollo/client" : "@apollo/react-hooks"
+        rawConfig.reactApolloVersion === 3
+          ? "@apollo/client"
+          : "@apollo/react-hooks"
       ),
       apolloImportFrom: getConfigValue(
         rawConfig.apolloImportFrom,
-        rawConfig.apolloVersion === 3 ? "@apollo/client" : "apollo-client"
+        rawConfig.reactApolloVersion === 3 ? "@apollo/client" : "apollo-client"
       ),
 
       apolloCacheImportFrom: getConfigValue(
@@ -49,7 +51,7 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
         "apollo-cache-inmemory"
       ),
 
-      apolloVersion: getConfigValue(rawConfig.apolloVersion, 2),
+      reactApolloVersion: getConfigValue(rawConfig.reactApolloVersion, 2),
       excludePatterns: getConfigValue(rawConfig.excludePatterns, null),
       excludePatternsOptions: getConfigValue(
         rawConfig.excludePatternsOptions,

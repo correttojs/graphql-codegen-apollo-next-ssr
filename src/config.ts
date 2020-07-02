@@ -49,7 +49,7 @@ export type Config = {
    *    reactApolloVersion: 3
    * ```
    */
-  apolloVersion?: 2 | 3;
+  reactApolloVersion?: 2 | 3;
   /**
    * @description Regexp to exclude a certain operation name
    */
@@ -58,11 +58,17 @@ export type Config = {
    * @description Regexp options to exclude a certain operation name
    */
   excludePatternsOptions?: string;
-  /**
-   * @description Path to custom DataIdFromObject import
-   */
 
+  /**
+   * @description Add custom code before each operation
+   */
   pre?: string;
+  /**
+   * @description Add custom code after each operation
+   */
   post?: string;
+  /**
+   * @description Add custom imports needed by pre/post
+   */
   customImports?: string;
 };

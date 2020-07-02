@@ -17,7 +17,7 @@ generates:
     config:
       documentMode: external
       importDocumentNodeExternallyFrom: ./graphql
-      apolloVersion: 2
+      reactApolloVersion: 2
       # excludePatterns: 'getComments'
       # excludePatternsOptions: 'i'
       # customDataIdFromObjectName: 'test'
