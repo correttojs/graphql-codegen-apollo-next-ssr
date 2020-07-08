@@ -77,7 +77,7 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
     this.imports.add(`import { NextPage } from 'next';`);
     this.imports.add(`import { NextRouter, useRouter } from 'next/router'`);
     this.imports.add(
-      `import { QueryHookOptions, useQuery } from '@apollo/react-hooks';`
+      `import { QueryHookOptions, useQuery } from '${this.config.apolloReactHooksImportFrom}';`
     );
     this.imports.add(
       `import * as Apollo from '${this.config.apolloImportFrom}';`
