@@ -134,6 +134,9 @@ describe("Apollo Next SSr", () => {
       expect(content.prepend).toContain(
         "import * as Apollo from '@apollo/client';"
       );
+      expect(content.prepend).not.toContain(
+        "import { QueryHookOptions, useQuery } from '@apollo/react-hooks';"
+      );
       await validateTypeScript(content, schema, docs, {});
     });
 
