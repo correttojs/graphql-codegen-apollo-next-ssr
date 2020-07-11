@@ -17,6 +17,7 @@ By declaring a top level query we can save rendering time and provide a simpler 
 - `customImports` (default: ''): full custom import declaration
 - `pre` (default: ''): custom code before each function
 - `post` (default: ''):  custom code after each function
+- `apolloClientInstanceImport`(default: ''): Add apolloClient instance imports
 
 ## Example config
 

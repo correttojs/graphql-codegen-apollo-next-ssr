@@ -106,4 +106,9 @@ export type Config = {
    * @description Add custom imports needed by pre/post
    */
   customImports?: string;
+
+  /**
+   * @description Add apolloClient instance imports
+   */
+  apolloClientInstanceImport?: string;
 };

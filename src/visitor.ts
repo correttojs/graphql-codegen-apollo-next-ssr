@@ -63,6 +63,11 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
       customImports: getConfigValue(rawConfig.customImports, null),
       withHOC: getConfigValue(rawConfig.withHOC, true),
       withHooks: getConfigValue(rawConfig.withHooks, false),
+
+      apolloClientInstanceImport: getConfigValue(
+        rawConfig.apolloClientInstanceImport,
+        ""
+      ),
     });
 
     this._externalImportPrefix = this.config.importOperationTypesFrom
@@ -86,7 +91,11 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
     this.imports.add(
       `import { NormalizedCacheObject } from '${this.config.apolloCacheImportFrom}';`
     );
-
+    if (this.config.apolloClientInstanceImport) {
+      this.imports.add(
+        `import { getApolloClient} from '${this.config.apolloClientInstanceImport}';`
+      );
+    }
     if (this.config.customImports) {
       this.imports.add(this.config.customImports);
     }
@@ -145,7 +154,16 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
 };`
       : "";
 
-    const getSSP = `export const getServerPage${pageOperation} = async (options: Omit<Apollo.QueryOptions<${operationVariablesTypes}>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>) => {
+    const getSSP = `export const getServerPage${pageOperation} = async (options: Omit<Apollo.QueryOptions<${operationVariablesTypes}>, 'query'>, ${
+      this.config.apolloClientInstanceImport
+        ? "ctx? :any"
+        : "apolloClient: Apollo.ApolloClient<NormalizedCacheObject>"
+    }) => {
+        ${
+          this.config.apolloClientInstanceImport
+            ? "const apolloClient = getApolloClient(ctx);"
+            : ""
+        }
         await apolloClient.query({ ...options, query:Operations.${documentVariableName} });
         const apolloState = apolloClient.cache.extract();
         return {

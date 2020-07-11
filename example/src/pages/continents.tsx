@@ -1,6 +1,6 @@
 import { PageGetContinentsComp, ssrGetContinents } from "../generated/page";
 
-import { withApollo, getApollo } from "../withApollo";
+import { withApollo } from "../withApollo";
 
 const ContinentPage: PageGetContinentsComp = (props) => {
   const { data } = ssrGetContinents.usePage();
@@ -8,7 +8,7 @@ const ContinentPage: PageGetContinentsComp = (props) => {
 };
 
 export const getServerSideProps = async () => {
-  return await ssrGetContinents.getServerPage({}, getApollo());
+  return await ssrGetContinents.getServerPage({});
 };
 
 export default withApollo(ContinentPage);

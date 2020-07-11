@@ -6,13 +6,13 @@ import ApolloClient from "apollo-client";
 
 export const withApollo = (Comp: NextPage) => (props) => {
   return (
-    <ApolloProvider client={getApollo(props.apolloState)}>
+    <ApolloProvider client={getApolloClient(null, props.apolloState)}>
       <Comp />
     </ApolloProvider>
   );
 };
 
-export const getApollo = (initialState?: NormalizedCacheObject) => {
+export const getApolloClient = (ctx?, initialState?: NormalizedCacheObject) => {
   const httpLink = createHttpLink({
     uri: "https://countries.trevorblades.com",
     fetch,

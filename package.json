@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "prepublish": "tsc",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config codegen.yml",
+    "release": "standard-version"
   },
   "dependencies": {
     "@graphql-codegen/plugin-helpers": "^1.15.0",
@@ -30,6 +31,7 @@
     "graphql": "^15.1.0",
     "graphql-codegen": "^0.4.0",
     "jest": "^26.0.1",
+    "standard-version": "^8.0.0",
     "ts-jest": "^26.1.0",
     "typescript": "^3.9.5"
   },
