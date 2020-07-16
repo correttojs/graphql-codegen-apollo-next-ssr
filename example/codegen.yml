@@ -8,6 +8,7 @@ generates:
       - "typescript-operations"
       - "typescript-react-apollo"
     config:
+          reactApolloVersion: 3
           withHooks: false
           withHOC: false
           withComponent: false
@@ -17,7 +18,7 @@ generates:
     config:
       documentMode: external
       importDocumentNodeExternallyFrom: ./graphql
-      reactApolloVersion: 2
+      reactApolloVersion: 3
       withHooks: true
       # withHOC: false
       # excludePatterns: 'getComments'

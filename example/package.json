@@ -4,16 +4,13 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@apollo/react-components": "^3.1.5",
-    "@apollo/react-hooks": "^3.1.5",
-    "apollo-link-http": "^1.5.17",
+    "@apollo/client": "^3.0.1",
     "isomorphic-unfetch": "^3.0.0",
     "next": "^9.4.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
-    "@apollo/client": "^3.0.0-rc.6",
     "@graphql-codegen/cli": "1.15.4",
     "@graphql-codegen/import-types-preset": "^1.15.4",
     "@graphql-codegen/typescript": "1.15.4",

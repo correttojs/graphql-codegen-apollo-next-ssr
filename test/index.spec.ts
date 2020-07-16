@@ -104,7 +104,6 @@ describe("Apollo Next SSr", () => {
         schema,
         docs,
         {
-          apolloCacheImportFrom: "cache",
           apolloImportFrom: "client",
         },
         {

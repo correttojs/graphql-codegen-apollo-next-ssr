@@ -46,11 +46,6 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
         rawConfig.reactApolloVersion === 3 ? "@apollo/client" : "apollo-client"
       ),
 
-      apolloCacheImportFrom: getConfigValue(
-        rawConfig.apolloCacheImportFrom,
-        "apollo-cache-inmemory"
-      ),
-
       reactApolloVersion: getConfigValue(rawConfig.reactApolloVersion, 2),
       excludePatterns: getConfigValue(rawConfig.excludePatterns, null),
       excludePatternsOptions: getConfigValue(
@@ -88,9 +83,7 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
       `import * as Apollo from '${this.config.apolloImportFrom}';`
     );
     this.imports.add(`import React from 'react';`);
-    this.imports.add(
-      `import { NormalizedCacheObject } from '${this.config.apolloCacheImportFrom}';`
-    );
+
     if (this.config.apolloClientInstanceImport) {
       this.imports.add(
         `import { getApolloClient} from '${this.config.apolloClientInstanceImport}';`

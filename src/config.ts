@@ -22,12 +22,6 @@ export type Config = {
   apolloImportFrom?: string;
 
   /**
-   * @description Customize the package where apollo-cache-inmemory lib is loaded from.
-   * @default "apollo-cache-inmemory"
-   */
-  apolloCacheImportFrom?: string;
-
-  /**
    * @description Customize the package where apollo-react hooks lib is loaded from.
    * @default "@apollo/react-hooks"
    */
