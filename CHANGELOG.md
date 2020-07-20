@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.11](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/compare/v0.0.10...v0.0.11) (2020-07-20)
+
+
+### Bug Fixes
+
+* **5:** apollo-cache dependency ([9e82f1a](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/commit/9e82f1a960a5767a482155a30aca66ca64ae1233))
+
 ### [0.0.10](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/compare/v0.0.9...v0.0.10) (2020-07-17)
 
 
