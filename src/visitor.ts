@@ -63,6 +63,12 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
         rawConfig.apolloClientInstanceImport,
         ""
       ),
+      apolloCacheImportFrom: getConfigValue(
+        rawConfig.apolloCacheImportFrom,
+        rawConfig.reactApolloVersion === 3
+          ? "@apollo/client"
+          : "apollo-cache-inmemory"
+      ),
     });
 
     this._externalImportPrefix = this.config.importOperationTypesFrom
@@ -76,6 +82,9 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
   public getImports(): string[] {
     this.imports.add(`import { NextPage } from 'next';`);
     this.imports.add(`import { NextRouter, useRouter } from 'next/router'`);
+    this.imports.add(
+      `import { NormalizedCacheObject } from '${this.config.apolloCacheImportFrom}';`
+    );
     this.imports.add(
       `import { QueryHookOptions, useQuery } from '${this.config.apolloReactHooksImportFrom}';`
     );
