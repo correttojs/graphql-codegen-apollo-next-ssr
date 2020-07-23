@@ -69,6 +69,7 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
           ? "@apollo/client"
           : "apollo-cache-inmemory"
       ),
+      returnRawQuery: getConfigValue(rawConfig.returnRawQuery, false),
     });
 
     this._externalImportPrefix = this.config.importOperationTypesFrom
@@ -166,6 +167,16 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
             ? "const apolloClient = getApolloClient(ctx);"
             : ""
         }
+        
+        ${
+          this.config.returnRawQuery
+            ? `
+          const props = await apolloClient.query<${operationResultType}>({ ...options, query:Operations.${documentVariableName} });
+          return {
+            props,
+          };
+        `
+            : `
         await apolloClient.query({ ...options, query:Operations.${documentVariableName} });
         const apolloState = apolloClient.cache.extract();
         return {
@@ -173,6 +184,9 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
                 apolloState,
             },
         };
+        `
+        }
+        
       }`;
 
     const ssr = `export const ssr${pageOperation} = {
