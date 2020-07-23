@@ -291,4 +291,51 @@ export const getServerPageSubmitRepository = async (options: Omit<Apollo.QueryOp
      };`);
     await validateTypeScript(content, schema, docs, {});
   });
+
+  it("Should generate getServerPage with raw query response", async () => {
+    const documents = parse(/* GraphQL */ `
+      query feed {
+        feed {
+          id
+          commentCount
+          repository {
+            full_name
+            html_url
+            owner {
+              avatar_url
+            }
+          }
+        }
+      }
+
+      mutation submitRepository($name: String) {
+        submitRepository(repoFullName: $name) {
+          id
+        }
+      }
+    `);
+    const docs = [{ location: "", document: documents }];
+
+    const content = (await plugin(
+      schema,
+      docs,
+      {
+        withHooks: true,
+        withHOC: false,
+        returnRawQuery: true,
+      },
+      {
+        outputFile: "graphql.tsx",
+      }
+    )) as Types.ComplexPluginOutput;
+
+    expect(content.content).toBeSimilarStringTo(`
+export const getServerPageSubmitRepository = async (options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>) => {
+             const props = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument });
+             return {
+                 props,
+             };`);
+
+    await validateTypeScript(content, schema, docs, {});
+  });
 });
