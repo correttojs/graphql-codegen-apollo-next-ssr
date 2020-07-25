@@ -157,17 +157,23 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
 };`
       : "";
 
-    const getSSP = `export const getServerPage${pageOperation} = async (options: Omit<Apollo.QueryOptions<${operationVariablesTypes}>, 'query'>, ${
+    const getSSP = `export async function getServerPage${pageOperation}${
+      this.config.returnRawQuery ? "" : "<T extends true | false>"
+    }(options: Omit<Apollo.QueryOptions<${operationVariablesTypes}>, 'query'>, ${
       this.config.apolloClientInstanceImport
         ? "ctx? :any"
         : "apolloClient: Apollo.ApolloClient<NormalizedCacheObject>"
-    }) => {
+    }${
+      this.config.returnRawQuery
+        ? `)`
+        : `
+    , rawQueryResult?: T): Promise<{props: T extends true ? Apollo.ApolloQueryResult<${operationResultType}> : {apolloState: NormalizedCacheObject} }> `
+    } {
         ${
           this.config.apolloClientInstanceImport
             ? "const apolloClient = getApolloClient(ctx);"
             : ""
         }
-        
         ${
           this.config.returnRawQuery
             ? `
@@ -177,13 +183,18 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
           };
         `
             : `
-        await apolloClient.query({ ...options, query:Operations.${documentVariableName} });
+        const data = await apolloClient.query<${operationResultType}>({ ...options, query:Operations.${documentVariableName} });
+        if(rawQueryResult){
+          return {
+             props: data,
+          } as any;
+        }
         const apolloState = apolloClient.cache.extract();
         return {
             props: {
                 apolloState,
             },
-        };
+        } as any;
         `
         }
         

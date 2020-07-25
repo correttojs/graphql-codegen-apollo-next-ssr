@@ -210,14 +210,25 @@ describe("Apollo Next SSr", () => {
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
-export const getServerPageSubmitRepository = async (options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>) => {
-             await apolloClient.query({ ...options, query:Operations.SubmitRepositoryDocument });
+export async function getServerPageSubmitRepository<T extends true | false>(options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>
+         , rawQueryResult?: T): Promise<{props: T extends true ? Apollo.ApolloQueryResult<SubmitRepositoryMutation> : {apolloState: NormalizedCacheObject} }>  {
+             
+             
+             const data = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument });
+             if(rawQueryResult){
+               return {
+                  props: data,
+               } as any;
+             }
              const apolloState = apolloClient.cache.extract();
              return {
                  props: {
                      apolloState,
                  },
-             };`);
+             } as any;
+             
+             
+           }`);
       expect(content.content).toBeSimilarStringTo(
         `export type PageFeedComp = React.FC<{data: FeedQuery, error: Apollo.ApolloError}>;`
       );
@@ -271,14 +282,25 @@ export const getServerPageSubmitRepository = async (options: Omit<Apollo.QueryOp
     )) as Types.ComplexPluginOutput;
 
     expect(content.content).toBeSimilarStringTo(`
-export const getServerPageSubmitRepository = async (options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>) => {
-             await apolloClient.query({ ...options, query:Operations.SubmitRepositoryDocument });
+export async function getServerPageSubmitRepository<T extends true | false>(options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>
+         , rawQueryResult?: T): Promise<{props: T extends true ? Apollo.ApolloQueryResult<SubmitRepositoryMutation> : {apolloState: NormalizedCacheObject} }>  {
+             
+             
+             const data = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument });
+             if(rawQueryResult){
+               return {
+                  props: data,
+               } as any;
+             }
              const apolloState = apolloClient.cache.extract();
              return {
                  props: {
                      apolloState,
                  },
-             };`);
+             } as any;
+             
+             
+           }`);
     expect(content.content).toBeSimilarStringTo(
       `export type PageFeedComp = React.FC<{data: FeedQuery, error: Apollo.ApolloError}>;`
     );
@@ -330,11 +352,16 @@ export const getServerPageSubmitRepository = async (options: Omit<Apollo.QueryOp
     )) as Types.ComplexPluginOutput;
 
     expect(content.content).toBeSimilarStringTo(`
-export const getServerPageSubmitRepository = async (options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>) => {
-             const props = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument });
-             return {
+    export async function getServerPageSubmitRepository(options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>) {
+             
+             
+               const props = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument });
+               return {
                  props,
-             };`);
+               };
+             
+             
+           }`);
 
     await validateTypeScript(content, schema, docs, {});
   });

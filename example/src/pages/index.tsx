@@ -4,11 +4,17 @@ import { withApollo } from "../withApollo";
 import { GetServerSideProps } from "next";
 
 const HomePage: PageGetCountriesComp = (props) => {
-  return <div>Welcome to Next.js! {props.data?.countries?.[0]?.name}</div>;
+  return (
+    <div>
+      {props.data?.countries?.map((country, k) => (
+        <div key={k}>{country.name}</div>
+      ))}
+    </div>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  return await ssrGetCountries.getServerPage({});
+  return await ssrGetCountries.getServerPage({}, ctx);
 };
 
 export default withApollo(ssrGetCountries.withPage(() => ({}))(HomePage));
