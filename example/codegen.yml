@@ -30,4 +30,4 @@ generates:
     presetConfig:
       typesPath: ./graphql
     plugins:
-      - "../build/src/index.js"
+      - "../build/src/index.js" # replace by - graphql-codegen-apollo-next-ssr
