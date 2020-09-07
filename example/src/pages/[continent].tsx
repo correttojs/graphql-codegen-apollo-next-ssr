@@ -19,15 +19,16 @@ const HomePage: PageGetCountriesByCodeComp = (props) => {
 
 export const getStaticProps: GetServerSideProps = async ({ params }) => {
   return await ssrGetCountriesByCode.getServerPage({
-    variables: { code: params.continent.toString().toUpperCase() },
+    variables: { code: params?.continent?.toString().toUpperCase() || "" },
   });
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { props } = await ssrGetContinents.getServerPage({}, null, true);
-  const paths = props.data.continents.map((continent) => ({
-    params: { continent: continent.code },
-  }));
+  const paths =
+    props?.data?.continents.map((continent) => ({
+      params: { continent: continent.code },
+    })) || [];
 
   return {
     paths,
@@ -37,6 +38,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export default withApollo(
   ssrGetCountriesByCode.withPage((arg) => ({
-    variables: { code: arg.query.continent.toString().toUpperCase() },
+    variables: { code: arg?.query?.continent?.toString().toUpperCase() || "" },
   }))(HomePage)
 );
