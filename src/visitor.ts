@@ -137,12 +137,13 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
       .replace(/page/i, "")
       .replace(/query/i, "");
 
-    const WrappedComp = `export type Page${pageOperation}Comp = React.FC<{data: ${operationResultType}, error: Apollo.ApolloError}>;`;
+    const WrappedComp = `export type Page${pageOperation}Comp = React.FC<{data?: ${operationResultType}, error?: Apollo.ApolloError}>;`;
 
     const pageQueryString = this.config.withHOC
       ? `export const withPage${pageOperation} = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) => (WrappedComponent:Page${pageOperation}Comp) : NextPage  => (props) => {
                 const router = useRouter()
-                const {data, error } = useQuery(Operations.${documentVariableName}, optionsFunc(router))    
+                const options = optionsFunc ? optionsFunc(router) : {};
+                const {data, error } = useQuery(Operations.${documentVariableName}, options)    
                 return <WrappedComponent {...props} data={data} error={error} /> ;
                    
             }; `
