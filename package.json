@@ -20,7 +20,7 @@
   "main": "build/src/index.js",
   "devDependencies": {
     "@graphql-codegen/cli": "^1.17.0",
-    "@graphql-codegen/fragment-matcher": "^1.17.0",
+    "@graphql-codegen/fragment-matcher": "^2.0.0",
     "@graphql-codegen/import-types-preset": "^1.17.0",
     "@graphql-codegen/introspection": "^1.17.0",
     "@graphql-codegen/testing": "^1.17.0",
