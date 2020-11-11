@@ -4,7 +4,7 @@ import { parse, GraphQLSchema, buildClientSchema } from "graphql";
 import { Types, mergeOutputs } from "@graphql-codegen/plugin-helpers";
 import { plugin as tsPlugin } from "@graphql-codegen/typescript";
 import { plugin as tsDocumentsPlugin } from "@graphql-codegen/typescript-operations";
-
+import * as fs from "fs";
 describe("Apollo Next SSr", () => {
   let spyConsoleError: jest.SpyInstance;
   beforeEach(() => {
@@ -208,37 +208,40 @@ describe("Apollo Next SSr", () => {
           outputFile: "graphql.tsx",
         }
       )) as Types.ComplexPluginOutput;
+      fs.writeFileSync("test/generated.ts", content.content);
 
       expect(content.content).toBeSimilarStringTo(`
 export async function getServerPageSubmitRepository<T extends true | false>(options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>
-         , rawQueryResult?: T): Promise<{props: T extends true ? Apollo.ApolloQueryResult<SubmitRepositoryMutation> : {apolloState: NormalizedCacheObject} }>  {
-             
-             
-             const data = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument });
-             if(rawQueryResult){
-               return {
-                  props: data,
-               } as any;
-             }
-             const apolloState = apolloClient.cache.extract();
-             return {
-                 props: {
-                     apolloState,
-                 },
-             } as any;
-             
-             
-           }`);
+         , rawQueryResult?: T): Promise<{props: T extends true ? Apollo.ApolloQueryResult<SubmitRepositoryMutation> : {apolloState: NormalizedCacheObject, error: Apollo.ApolloError | GraphQLError | null} }>  {
+         
+         
+         const data = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument, errorPolicy: "all", });
+         if(rawQueryResult){
+           return {
+              props: data
+           } as any;
+         }
+         const apolloState = apolloClient.cache.extract();
+         return {
+             props: {
+                 apolloState,
+                 error: data?.error ?? data?.errors ?? null,
+             },
+         } as any;
+         
+         
+       }`);
       expect(content.content).toBeSimilarStringTo(
-        `export type PageFeedComp = React.FC<{data: FeedQuery, error: Apollo.ApolloError}>;`
+        `export type PageFeedComp = React.FC<{data?: FeedQuery, error?: Apollo.ApolloError}>;`
       );
       expect(content.content).toBeSimilarStringTo(`
     export const withPageFeed = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<FeedQuery, FeedQueryVariables>) => (WrappedComponent:PageFeedComp) : NextPage  => (props) => {
-                     const router = useRouter()
-                     const {data, error } = useQuery(Operations.FeedDocument, optionsFunc(router))    
-                     return <WrappedComponent {...props} data={data} error={error} /> ;
-                        
-                 }; `);
+                const router = useRouter()
+                const options = optionsFunc ? optionsFunc(router) : {};
+                const {data, error } = useQuery(Operations.FeedDocument, options)    
+                return <WrappedComponent {...props} data={data} error={error} /> ;
+                   
+            }; `);
       expect(content.content).not.toBeSimilarStringTo(`
     export const useFeed`);
       await validateTypeScript(content, schema, docs, {});
@@ -283,26 +286,27 @@ export async function getServerPageSubmitRepository<T extends true | false>(opti
 
     expect(content.content).toBeSimilarStringTo(`
 export async function getServerPageSubmitRepository<T extends true | false>(options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>
-         , rawQueryResult?: T): Promise<{props: T extends true ? Apollo.ApolloQueryResult<SubmitRepositoryMutation> : {apolloState: NormalizedCacheObject} }>  {
-             
-             
-             const data = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument });
-             if(rawQueryResult){
-               return {
-                  props: data,
-               } as any;
-             }
-             const apolloState = apolloClient.cache.extract();
-             return {
-                 props: {
-                     apolloState,
-                 },
-             } as any;
-             
-             
-           }`);
+     , rawQueryResult?: T): Promise<{props: T extends true ? Apollo.ApolloQueryResult<SubmitRepositoryMutation> : {apolloState: NormalizedCacheObject, error: Apollo.ApolloError | GraphQLError | null} }>  {
+         
+         
+         const data = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument, errorPolicy: "all", });
+         if(rawQueryResult){
+           return {
+              props: data
+           } as any;
+         }
+         const apolloState = apolloClient.cache.extract();
+         return {
+             props: {
+                 apolloState,
+                 error: data?.error ?? data?.errors ?? null,
+             },
+         } as any;
+         
+         
+       }`);
     expect(content.content).toBeSimilarStringTo(
-      `export type PageFeedComp = React.FC<{data: FeedQuery, error: Apollo.ApolloError}>;`
+      `export type PageFeedComp = React.FC<{data?: FeedQuery, error?: Apollo.ApolloError}>;`
     );
     expect(content.content).toBeSimilarStringTo(`
   export const useFeed = (
@@ -352,12 +356,9 @@ export async function getServerPageSubmitRepository<T extends true | false>(opti
     )) as Types.ComplexPluginOutput;
 
     expect(content.content).toBeSimilarStringTo(`
-    export async function getServerPageSubmitRepository(options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>) {
-             
-             
-               const props = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument });
+    const props = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument, errorPolicy: "all" });
                return {
-                 props,
+                 props
                };
              
              

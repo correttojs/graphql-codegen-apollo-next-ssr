@@ -3,3 +3,4 @@ build
 .vscode
 example/src/generated
 example/node_modules/*
+test/generated.ts

@@ -18,9 +18,15 @@ const HomePage: PageGetCountriesByCodeComp = (props) => {
 };
 
 export const getStaticProps: GetServerSideProps = async ({ params }) => {
-  return await ssrGetCountriesByCode.getServerPage({
+  const res = await ssrGetCountriesByCode.getServerPage({
     variables: { code: params?.continent?.toString().toUpperCase() || "" },
   });
+  if (res.props.error) {
+    return {
+      notFound: true,
+    };
+  }
+  return res;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

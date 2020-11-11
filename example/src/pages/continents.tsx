@@ -8,7 +8,7 @@ const ContinentPage: PageGetContinentsComp = () => {
     <div>
       {data?.continents?.map((continent, k) => (
         <div key={k}>
-          <Link href={"/[continent]"} as={continent.code}>
+          <Link href={`/${continent.code}`}>
             <a>{continent.name}</a>
           </Link>
         </div>
