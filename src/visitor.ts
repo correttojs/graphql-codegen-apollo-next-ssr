@@ -69,7 +69,6 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
           ? "@apollo/client"
           : "apollo-cache-inmemory"
       ),
-      returnRawQuery: getConfigValue(rawConfig.returnRawQuery, false),
     });
 
     this._externalImportPrefix = this.config.importOperationTypesFrom
@@ -81,12 +80,9 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
   }
 
   public getImports(): string[] {
-    this.imports.add(`import {GraphQLError } from 'graphql'`);
     this.imports.add(`import { NextPage } from 'next';`);
     this.imports.add(`import { NextRouter, useRouter } from 'next/router'`);
-    this.imports.add(
-      `import { NormalizedCacheObject } from '${this.config.apolloCacheImportFrom}';`
-    );
+
     this.imports.add(
       `import { QueryHookOptions, useQuery } from '${this.config.apolloReactHooksImportFrom}';`
     );
@@ -159,48 +155,29 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
 };`
       : "";
 
-    const getSSP = `export async function getServerPage${pageOperation}${
-      this.config.returnRawQuery ? "" : "<T extends true | false>"
-    }(options: Omit<Apollo.QueryOptions<${operationVariablesTypes}>, 'query'>, ${
+    const getSSP = `export async function getServerPage${pageOperation}
+    (options: Omit<Apollo.QueryOptions<${operationVariablesTypes}>, 'query'>, ${
       this.config.apolloClientInstanceImport
         ? "ctx? :any"
         : "apolloClient: Apollo.ApolloClient<NormalizedCacheObject>"
-    }${
-      this.config.returnRawQuery
-        ? `)`
-        : `
-    , rawQueryResult?: T): Promise<{props: T extends true ? Apollo.ApolloQueryResult<${operationResultType}> : {apolloState: NormalizedCacheObject, error: Apollo.ApolloError | GraphQLError | null} }> `
-    } {
+    } ){
         ${
           this.config.apolloClientInstanceImport
             ? "const apolloClient = getApolloClient(ctx);"
             : ""
         }
-        ${
-          this.config.returnRawQuery
-            ? `
-          const props = await apolloClient.query<${operationResultType}>({ ...options, query:Operations.${documentVariableName}, errorPolicy: "all" });
-          return {
-            props
-          };
-        `
-            : `
-        const data = await apolloClient.query<${operationResultType}>({ ...options, query:Operations.${documentVariableName}, errorPolicy: "all", });
-        if(rawQueryResult){
-          return {
-             props: data
-          } as any;
-        }
+        
+        const data = await apolloClient.query<${operationResultType}>({ ...options, query:Operations.${documentVariableName} });
+        
         const apolloState = apolloClient.cache.extract();
+
         return {
             props: {
                 apolloState,
+                data: data?.data,
                 error: data?.error ?? data?.errors ?? null,
             },
-        } as any;
-        `
-        }
-        
+        };
       }`;
 
     const ssr = `export const ssr${pageOperation} = {

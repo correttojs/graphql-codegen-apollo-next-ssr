@@ -208,29 +208,24 @@ describe("Apollo Next SSr", () => {
           outputFile: "graphql.tsx",
         }
       )) as Types.ComplexPluginOutput;
-      fs.writeFileSync("test/generated.ts", content.content);
 
       expect(content.content).toBeSimilarStringTo(`
-export async function getServerPageSubmitRepository<T extends true | false>(options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>
-         , rawQueryResult?: T): Promise<{props: T extends true ? Apollo.ApolloQueryResult<SubmitRepositoryMutation> : {apolloState: NormalizedCacheObject, error: Apollo.ApolloError | GraphQLError | null} }>  {
-         
-         
-         const data = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument, errorPolicy: "all", });
-         if(rawQueryResult){
-           return {
-              props: data
-           } as any;
-         }
-         const apolloState = apolloClient.cache.extract();
-         return {
-             props: {
-                 apolloState,
-                 error: data?.error ?? data?.errors ?? null,
-             },
-         } as any;
-         
-         
-       }`);
+export async function getServerPageSubmitRepository
+    (options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject> ){
+        
+        
+        const data = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument });
+        
+        const apolloState = apolloClient.cache.extract();
+
+        return {
+            props: {
+                apolloState,
+                data: data?.data,
+                error: data?.error ?? data?.errors ?? null,
+            },
+        };
+      }`);
       expect(content.content).toBeSimilarStringTo(
         `export type PageFeedComp = React.FC<{data?: FeedQuery, error?: Apollo.ApolloError}>;`
       );
@@ -285,26 +280,22 @@ export async function getServerPageSubmitRepository<T extends true | false>(opti
     )) as Types.ComplexPluginOutput;
 
     expect(content.content).toBeSimilarStringTo(`
-export async function getServerPageSubmitRepository<T extends true | false>(options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject>
-     , rawQueryResult?: T): Promise<{props: T extends true ? Apollo.ApolloQueryResult<SubmitRepositoryMutation> : {apolloState: NormalizedCacheObject, error: Apollo.ApolloError | GraphQLError | null} }>  {
-         
-         
-         const data = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument, errorPolicy: "all", });
-         if(rawQueryResult){
-           return {
-              props: data
-           } as any;
-         }
-         const apolloState = apolloClient.cache.extract();
-         return {
-             props: {
-                 apolloState,
-                 error: data?.error ?? data?.errors ?? null,
-             },
-         } as any;
-         
-         
-       }`);
+export async function getServerPageSubmitRepository
+    (options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject> ){
+        
+        
+        const data = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument });
+        
+        const apolloState = apolloClient.cache.extract();
+
+        return {
+            props: {
+                apolloState,
+                data: data?.data,
+                error: data?.error ?? data?.errors ?? null,
+            },
+        };
+      }`);
     expect(content.content).toBeSimilarStringTo(
       `export type PageFeedComp = React.FC<{data?: FeedQuery, error?: Apollo.ApolloError}>;`
     );
@@ -315,55 +306,6 @@ export async function getServerPageSubmitRepository<T extends true | false>(opti
        const options = optionsFunc ? optionsFunc(router) : {};
        return useQuery(Operations.FeedDocument, options);
      };`);
-    await validateTypeScript(content, schema, docs, {});
-  });
-
-  it("Should generate getServerPage with raw query response", async () => {
-    const documents = parse(/* GraphQL */ `
-      query feed {
-        feed {
-          id
-          commentCount
-          repository {
-            full_name
-            html_url
-            owner {
-              avatar_url
-            }
-          }
-        }
-      }
-
-      mutation submitRepository($name: String) {
-        submitRepository(repoFullName: $name) {
-          id
-        }
-      }
-    `);
-    const docs = [{ location: "", document: documents }];
-
-    const content = (await plugin(
-      schema,
-      docs,
-      {
-        withHooks: true,
-        withHOC: false,
-        returnRawQuery: true,
-      },
-      {
-        outputFile: "graphql.tsx",
-      }
-    )) as Types.ComplexPluginOutput;
-
-    expect(content.content).toBeSimilarStringTo(`
-    const props = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument, errorPolicy: "all" });
-               return {
-                 props
-               };
-             
-             
-           }`);
-
     await validateTypeScript(content, schema, docs, {});
   });
 });

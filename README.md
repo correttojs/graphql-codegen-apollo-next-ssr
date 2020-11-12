@@ -19,7 +19,6 @@ By declaring a top level query we can save rendering time and provide a simpler 
 - `pre` (default: ''): custom code before each function
 - `post` (default: ''):  custom code after each function
 - `apolloClientInstanceImport`(default: ''): Add apolloClient instance imports
-- `returnRawQuery` (default: false): Returns the query response instead of the normalized cache
 
 ## Example config
 
