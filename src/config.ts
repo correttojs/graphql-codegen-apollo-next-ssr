@@ -111,10 +111,4 @@ export type Config = {
    * @description Add apolloClient instance imports
    */
   apolloClientInstanceImport?: string;
-
-  /**
-   * @description Returns the query response instead of the normalized cache
-   * @default false
-   */
-  returnRawQuery?: boolean;
 };

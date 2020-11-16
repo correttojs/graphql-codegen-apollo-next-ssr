@@ -21,7 +21,8 @@ export const getStaticProps: GetServerSideProps = async ({ params }) => {
   const res = await ssrGetCountriesByCode.getServerPage({
     variables: { code: params?.continent?.toString().toUpperCase() || "" },
   });
-  if (res.props.error) {
+
+  if (res.props.error || !res.props.data?.countries?.length) {
     return {
       notFound: true,
     };
@@ -30,12 +31,12 @@ export const getStaticProps: GetServerSideProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { props } = await ssrGetContinents.getServerPage({}, null, true);
+  const { props } = await ssrGetContinents.getServerPage({}, null);
   const paths =
     props?.data?.continents.map((continent) => ({
       params: { continent: continent.code },
     })) || [];
-
+  paths.push({ params: { continent: "WWW" } });
   return {
     paths,
     fallback: false,
