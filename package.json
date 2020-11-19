@@ -9,6 +9,10 @@
     "codegen": "graphql-codegen --config codegen.yml",
     "release": "standard-version"
   },
+    "repository": {
+    "type": "git",
+    "url": "https://github.com/correttojs/graphql-codegen-apollo-next-ssr"
+  },
   "dependencies": {
     "@graphql-codegen/plugin-helpers": "^1.17.0",
     "@graphql-codegen/visitor-plugin-common": "^1.17.0",
