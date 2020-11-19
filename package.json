@@ -1,6 +1,6 @@
 {
   "name": "graphql-codegen-apollo-next-ssr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "GraphQL Code Generator plugin for generating a functions to read and write from the apollo cache",
   "license": "MIT",
   "scripts": {
@@ -9,7 +9,7 @@
     "codegen": "graphql-codegen --config codegen.yml",
     "release": "standard-version"
   },
-    "repository": {
+  "repository": {
     "type": "git",
     "url": "https://github.com/correttojs/graphql-codegen-apollo-next-ssr"
   },
