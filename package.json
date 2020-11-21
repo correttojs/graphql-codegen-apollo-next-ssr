@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "prepublish": "tsc",
+    "build": "tsc",
     "codegen": "graphql-codegen --config codegen.yml",
     "release": "standard-version"
   },
