@@ -53,6 +53,8 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
         ""
       ),
 
+      replacePage: getConfigValue(rawConfig.replacePage, true),
+      replaceQuery: getConfigValue(rawConfig.replaceQuery, true),
       pre: getConfigValue(rawConfig.pre, ""),
       post: getConfigValue(rawConfig.post, ""),
       customImports: getConfigValue(rawConfig.customImports, null),
@@ -121,18 +123,23 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
     });
 
     if (
-      this.config.excludePatterns &&
-      new RegExp(
-        this.config.excludePatterns,
-        this.config.excludePatternsOptions
-      ).test(operationName)
+      node.operation === "mutation" ||
+      (this.config.excludePatterns &&
+        new RegExp(
+          this.config.excludePatterns,
+          this.config.excludePatternsOptions
+        ).test(operationName))
     ) {
       return "";
     }
 
-    const pageOperation = operationName
-      .replace(/page/i, "")
-      .replace(/query/i, "");
+    let pageOperation = operationName;
+    if (this.config.replacePage) {
+      pageOperation = pageOperation.replace(/page/i, "");
+    }
+    if (this.config.replaceQuery) {
+      pageOperation = pageOperation.replace(/query/i, "");
+    }
 
     const WrappedComp = `export type Page${pageOperation}Comp = React.FC<{data?: ${operationResultType}, error?: Apollo.ApolloError}>;`;
 

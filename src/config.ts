@@ -95,6 +95,16 @@ export type Config = {
   excludePatternsOptions?: string;
 
   /**
+   * @description Replace "page" keyword inside the generated operations
+   */
+  replacePage?: boolean;
+
+  /**
+   * @description Replace "query" keyword inside the generated operations
+   */
+  replaceQuery?: boolean;
+
+  /**
    * @description Add custom code before each operation
    */
   pre?: string;

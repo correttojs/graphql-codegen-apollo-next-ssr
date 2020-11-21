@@ -208,13 +208,12 @@ describe("Apollo Next SSr", () => {
           outputFile: "graphql.tsx",
         }
       )) as Types.ComplexPluginOutput;
-
       expect(content.content).toBeSimilarStringTo(`
-export async function getServerPageSubmitRepository
-    (options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject> ){
+export async function getServerPageFeed
+    (options: Omit<Apollo.QueryOptions<FeedQueryVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject> ){
         
         
-        const data = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument });
+        const data = await apolloClient.query<FeedQuery>({ ...options, query:Operations.FeedDocument });
         
         const apolloState = apolloClient.cache.extract();
 
@@ -245,7 +244,7 @@ export async function getServerPageSubmitRepository
 
   it("Should generate getServerPage and usePage for query", async () => {
     const documents = parse(/* GraphQL */ `
-      query feed {
+      query PagefeedQuery {
         feed {
           id
           commentCount
@@ -280,11 +279,11 @@ export async function getServerPageSubmitRepository
     )) as Types.ComplexPluginOutput;
 
     expect(content.content).toBeSimilarStringTo(`
-export async function getServerPageSubmitRepository
-    (options: Omit<Apollo.QueryOptions<SubmitRepositoryMutationVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject> ){
+export async function getServerPagefeed
+    (options: Omit<Apollo.QueryOptions<PagefeedQueryQueryVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject> ){
         
         
-        const data = await apolloClient.query<SubmitRepositoryMutation>({ ...options, query:Operations.SubmitRepositoryDocument });
+        const data = await apolloClient.query<PagefeedQueryQuery>({ ...options, query:Operations.PagefeedQueryDocument });
         
         const apolloState = apolloClient.cache.extract();
 
@@ -297,15 +296,123 @@ export async function getServerPageSubmitRepository
         };
       }`);
     expect(content.content).toBeSimilarStringTo(
-      `export type PageFeedComp = React.FC<{data?: FeedQuery, error?: Apollo.ApolloError}>;`
+      `export type PagefeedComp = React.FC<{data?: PagefeedQueryQuery, error?: Apollo.ApolloError}>;`
     );
     expect(content.content).toBeSimilarStringTo(`
-  export const useFeed = (
-       optionsFunc?: (router: NextRouter)=> QueryHookOptions<FeedQuery, FeedQueryVariables>) => {
-       const router = useRouter();
-       const options = optionsFunc ? optionsFunc(router) : {};
-       return useQuery(Operations.FeedDocument, options);
-     };`);
+export const usefeed = (
+  optionsFunc?: (router: NextRouter)=> QueryHookOptions<PagefeedQueryQuery, PagefeedQueryQueryVariables>) => {
+  const router = useRouter();
+  const options = optionsFunc ? optionsFunc(router) : {};
+  return useQuery(Operations.PagefeedQueryDocument, options);
+};`);
+    await validateTypeScript(content, schema, docs, {});
+  });
+
+  it("Should exclude mutations", async () => {
+    const documents = parse(/* GraphQL */ `
+      query feed {
+        feed {
+          id
+          commentCount
+          repository {
+            full_name
+            html_url
+            owner {
+              avatar_url
+            }
+          }
+        }
+      }
+
+      mutation submitRepository($name: String) {
+        submitRepository(repoFullName: $name) {
+          id
+        }
+      }
+    `);
+    const docs = [{ location: "", document: documents }];
+
+    const content = (await plugin(
+      schema,
+      docs,
+      {},
+      {
+        outputFile: "graphql.tsx",
+      }
+    )) as Types.ComplexPluginOutput;
+
+    expect(content.content).not.toContain(`getServerPageSubmitRepository`);
+
+    await validateTypeScript(content, schema, docs, {});
+  });
+
+  it("Should generate getServerPage and usePage for query without replacing 'query' and 'page'", async () => {
+    const documents = parse(/* GraphQL */ `
+      query PageFeedQuery {
+        feed {
+          id
+          commentCount
+          repository {
+            full_name
+            html_url
+            owner {
+              avatar_url
+            }
+          }
+        }
+      }
+
+      mutation submitRepository($name: String) {
+        submitRepository(repoFullName: $name) {
+          id
+        }
+      }
+    `);
+    const docs = [{ location: "", document: documents }];
+
+    const content = (await plugin(
+      schema,
+      docs,
+      {
+        withHooks: true,
+        withHOC: false,
+        replacePage: false,
+        replaceQuery: false,
+      },
+      {
+        outputFile: "graphql.tsx",
+      }
+    )) as Types.ComplexPluginOutput;
+
+    // fs.writeFileSync("test.ts", content.content);
+    // fs.writeFileSync("test.ts", content.content);
+    expect(content.content).toBeSimilarStringTo(`
+export async function getServerPagePageFeedQuery
+    (options: Omit<Apollo.QueryOptions<PageFeedQueryQueryVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject> ){
+        
+        
+        const data = await apolloClient.query<PageFeedQueryQuery>({ ...options, query:Operations.PageFeedQueryDocument });
+        
+        const apolloState = apolloClient.cache.extract();
+
+        return {
+            props: {
+                apolloState,
+                data: data?.data,
+                error: data?.error ?? data?.errors ?? null,
+            },
+        };
+      }`);
+    expect(content.content).toBeSimilarStringTo(
+      `export type PagePageFeedQueryComp = React.FC<{data?: PageFeedQueryQuery, error?: Apollo.ApolloError}>;`
+    );
+    expect(content.content).toBeSimilarStringTo(`
+  export const usePageFeedQuery = (
+  optionsFunc?: (router: NextRouter)=> QueryHookOptions<PageFeedQueryQuery, PageFeedQueryQueryVariables>) => {
+  const router = useRouter();
+  const options = optionsFunc ? optionsFunc(router) : {};
+  return useQuery(Operations.PageFeedQueryDocument, options);
+};`);
     await validateTypeScript(content, schema, docs, {});
   });
 });
