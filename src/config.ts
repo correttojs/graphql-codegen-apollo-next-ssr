@@ -121,4 +121,9 @@ export type Config = {
    * @description Add apolloClient instance imports
    */
   apolloClientInstanceImport?: string;
+
+  /**
+   * @description Custom React import
+   */
+  reactImport?: string;
 };
