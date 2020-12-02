@@ -21,6 +21,7 @@ By declaring a top level query we can save rendering time and provide a simpler 
 - `apolloClientInstanceImport`(default: ''): Add apolloClient instance imports
 - `replaceQuery` (default: false): Replace "query" keyword inside the generated operations 
 - `replacePage` (default: false): Replace "page" keyword inside the generated operations 
+- `reactImport` (default: import type React from 'react';): custom react import 
 
 ## Example config
 

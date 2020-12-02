@@ -71,6 +71,10 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
           ? "@apollo/client"
           : "apollo-cache-inmemory"
       ),
+      reactImport: getConfigValue(
+        rawConfig.reactImport,
+        `import type React from 'react';`
+      ),
     });
 
     this._externalImportPrefix = this.config.importOperationTypesFrom
@@ -91,7 +95,7 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
     this.imports.add(
       `import * as Apollo from '${this.config.apolloImportFrom}';`
     );
-    this.imports.add(`import React from 'react';`);
+    this.imports.add(this.config.reactImport);
 
     if (this.config.apolloClientInstanceImport) {
       this.imports.add(
