@@ -102,9 +102,11 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
         `import { getApolloClient} from '${this.config.apolloClientInstanceImport}';`
       );
     }
-    this.imports.add(
-      `import type { NormalizedCacheObject } from '${this.config.apolloCacheImportFrom}';`
-    );
+    if (!this.config.apolloClientInstanceImport) {
+      this.imports.add(
+        `import type { NormalizedCacheObject } from '${this.config.apolloCacheImportFrom}';`
+      );
+    }
     if (this.config.customImports) {
       this.imports.add(this.config.customImports);
     }
