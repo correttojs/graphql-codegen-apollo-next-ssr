@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/compare/v1.4.0...v1.4.1) (2021-02-28)
+
+
+### Bug Fixes
+
+* **tools:** connect missings garphql and typescript deps to example ([8b4e3a4](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/commit/8b4e3a46ca958d286c7fa474c72ed7faadbf6442))
+
 ## [1.4.0](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/compare/v1.3.1...v1.4.0) (2021-02-06)
 
 
