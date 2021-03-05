@@ -86,7 +86,9 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
   }
 
   public getImports(): string[] {
-    this.imports.add(`import { NextPage } from 'next';`);
+    if (this.config.withHOC) {
+      this.imports.add(`import { NextPage } from 'next';`);
+    }
     this.imports.add(`import { NextRouter, useRouter } from 'next/router'`);
 
     this.imports.add(
