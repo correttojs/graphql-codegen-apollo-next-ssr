@@ -11,11 +11,11 @@
     "react-dom": "^17.0.1"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "1.21.1",
+    "@graphql-codegen/cli": "1.21.2",
     "@graphql-codegen/import-types-preset": "1.18.1",
-    "@graphql-codegen/typescript": "1.21.0",
-    "@graphql-codegen/typescript-operations": "1.17.14",
-    "@graphql-codegen/typescript-react-apollo": "2.2.1",
+    "@graphql-codegen/typescript": "1.21.1",
+    "@graphql-codegen/typescript-operations": "1.17.15",
+    "@graphql-codegen/typescript-react-apollo": "2.2.2",
     "@types/react": "17.0.3",
     "graphql": "15.5.0",
     "graphql-codegen-apollo-next-ssr": "1.4.2",
