@@ -123,6 +123,12 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
     return [...baseImports, ...Array.from(this.imports)];
   }
 
+  private getDocumentNodeVariable(documentVariableName: string): string {
+    return this.config.documentMode === DocumentMode.external
+      ? `Operations.${documentVariableName}`
+      : documentVariableName;
+  }
+
   private _buildOperationPageQuery(
     node: OperationDefinitionNode,
     documentVariableName: string,
@@ -158,7 +164,9 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
       ? `export const withPage${pageOperation} = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) => (WrappedComponent:Page${pageOperation}Comp) : NextPage  => (props) => {
                 const router = useRouter()
                 const options = optionsFunc ? optionsFunc(router) : {};
-                const {data, error } = useQuery(Operations.${documentVariableName}, options)    
+                const {data, error } = useQuery(${this.getDocumentNodeVariable(
+                  documentVariableName
+                )}, options)    
                 return <WrappedComponent {...props} data={data} error={error} /> ;
                    
             }; `
@@ -169,7 +177,9 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
   optionsFunc?: (router: NextRouter)=> QueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) => {
   const router = useRouter();
   const options = optionsFunc ? optionsFunc(router) : {};
-  return useQuery(Operations.${documentVariableName}, options);
+  return useQuery(${this.getDocumentNodeVariable(
+    documentVariableName
+  )}, options);
 };`
       : "";
 
@@ -185,7 +195,9 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
             : ""
         }
         
-        const data = await apolloClient.query<${operationResultType}>({ ...options, query:Operations.${documentVariableName} });
+        const data = await apolloClient.query<${operationResultType}>({ ...options, query: ${this.getDocumentNodeVariable(
+      documentVariableName
+    )} });
         
         const apolloState = apolloClient.cache.extract();
 
