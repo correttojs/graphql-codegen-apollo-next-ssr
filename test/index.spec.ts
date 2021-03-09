@@ -213,7 +213,7 @@ export async function getServerPageFeed
     (options: Omit<Apollo.QueryOptions<FeedQueryVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject> ){
         
         
-        const data = await apolloClient.query<FeedQuery>({ ...options, query:Operations.FeedDocument });
+        const data = await apolloClient.query<FeedQuery>({ ...options, query: FeedDocument });
         
         const apolloState = apolloClient.cache.extract();
 
@@ -232,7 +232,7 @@ export async function getServerPageFeed
     export const withPageFeed = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<FeedQuery, FeedQueryVariables>) => (WrappedComponent:PageFeedComp) : NextPage  => (props) => {
                 const router = useRouter()
                 const options = optionsFunc ? optionsFunc(router) : {};
-                const {data, error } = useQuery(Operations.FeedDocument, options)    
+                const {data, error } = useQuery(FeedDocument, options)    
                 return <WrappedComponent {...props} data={data} error={error} /> ;
                    
             }; `);
@@ -283,7 +283,7 @@ export async function getServerPagefeed
     (options: Omit<Apollo.QueryOptions<PagefeedQueryQueryVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject> ){
         
         
-        const data = await apolloClient.query<PagefeedQueryQuery>({ ...options, query:Operations.PagefeedQueryDocument });
+        const data = await apolloClient.query<PagefeedQueryQuery>({ ...options, query: PagefeedQueryDocument });
         
         const apolloState = apolloClient.cache.extract();
 
@@ -303,7 +303,7 @@ export const usefeed = (
   optionsFunc?: (router: NextRouter)=> QueryHookOptions<PagefeedQueryQuery, PagefeedQueryQueryVariables>) => {
   const router = useRouter();
   const options = optionsFunc ? optionsFunc(router) : {};
-  return useQuery(Operations.PagefeedQueryDocument, options);
+  return useQuery(PagefeedQueryDocument, options);
 };`);
     await validateTypeScript(content, schema, docs, {});
   });
@@ -391,7 +391,7 @@ export async function getServerPagePageFeedQuery
     (options: Omit<Apollo.QueryOptions<PageFeedQueryQueryVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject> ){
         
         
-        const data = await apolloClient.query<PageFeedQueryQuery>({ ...options, query:Operations.PageFeedQueryDocument });
+        const data = await apolloClient.query<PageFeedQueryQuery>({ ...options, query: PageFeedQueryDocument });
         
         const apolloState = apolloClient.cache.extract();
 
@@ -411,7 +411,7 @@ export async function getServerPagePageFeedQuery
   optionsFunc?: (router: NextRouter)=> QueryHookOptions<PageFeedQueryQuery, PageFeedQueryQueryVariables>) => {
   const router = useRouter();
   const options = optionsFunc ? optionsFunc(router) : {};
-  return useQuery(Operations.PageFeedQueryDocument, options);
+  return useQuery(PageFeedQueryDocument, options);
 };`);
     await validateTypeScript(content, schema, docs, {});
   });
