@@ -32,10 +32,6 @@ jobs:
           tag_name: ${{ steps.publish_tag.outputs.tag_name }}
           body_path: RELEASE_BODY.md
       - name: publish
-        uses: actions/setup-node@v2
-        with:
-            node-version: 12
-            registry-url: https://registry.npmjs.org/
         run: npm install && npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
