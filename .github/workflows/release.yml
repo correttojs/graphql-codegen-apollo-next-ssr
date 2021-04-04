@@ -1,0 +1,29 @@
+name: release
+on: push
+  branches: [release-*]
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # gives standard-version access to all previous commits
+      - name: generate tag and release body
+        run: |
+          git config user.name example
+          git config user.email mail@example.com
+          npx standard-version -i RELEASE_BODY.md --skip.commit
+      - name: publish tag
+        id: publish_tag
+        run: |
+          git push --follow-tags
+          echo ::set-output name=tag_name::$(git describe HEAD --abbrev=0)
+      - name: create release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_name: Release ${{ steps.publish_tag.outputs.tag_name }}
+          tag_name: ${{ steps.publish_tag.outputs.tag_name }}
+          body_path: RELEASE_BODY.md
