@@ -15,8 +15,8 @@ jobs:
           fetch-depth: 0 # gives standard-version access to all previous commits
       - name: generate tag and release body
         run: |
-          git config user.name example
-          git config user.email mail@example.com
+          git config user.name Fabio Benedetti
+          git config user.email fabio.benedetti@gmail.com
           npx standard-version -i RELEASE_BODY.md --skip.commit
       - name: publish tag
         id: publish_tag
