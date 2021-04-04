@@ -25,9 +25,7 @@ jobs:
           echo ::set-output name=tag_name::$(git describe HEAD --abbrev=0)
       - name: create release
         uses: actions/create-release@v1
-  publish:
-    runs-on: ubuntu-latest
-    steps:
+
       - uses: actions/checkout@master
       - uses: actions/setup-node@v2
         with:
