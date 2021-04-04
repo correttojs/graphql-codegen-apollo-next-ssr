@@ -31,9 +31,7 @@ jobs:
       - name: create release
         uses: actions/create-release@v1
       - run: npm install
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+      - run: NODE_AUTH_TOKEN=${{ secrets.npm_token }} npm publish
         
   
         
