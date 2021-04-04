@@ -24,10 +24,14 @@ jobs:
           git push --follow-tags
           echo ::set-output name=tag_name::$(git describe HEAD --abbrev=0)
       - name: create release
+        uses: actions/create-release@v1
+  publish:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: npm install
       - run: npm publish
