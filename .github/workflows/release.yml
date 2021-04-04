@@ -21,7 +21,7 @@ jobs:
       - name: publish tag
         id: publish_tag
         run: |
-          git push --follow-tags origin master && npm publish
+          git push --follow-tags origin master && npm install && npm publish
           echo ::set-output name=tag_name::$(git describe HEAD --abbrev=0)
       - name: create release
         uses: actions/create-release@v1
