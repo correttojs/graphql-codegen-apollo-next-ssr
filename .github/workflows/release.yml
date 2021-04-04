@@ -15,8 +15,8 @@ jobs:
           fetch-depth: 0 # gives standard-version access to all previous commits
       - name: generate tag and release body
         run: |
-          git config user.name Fabio Benedetti
-          git config user.email fabio.benedetti@gmail.com
+          git config user.name example
+          git config user.email mail@example.com
           npx standard-version -i RELEASE_BODY.md --skip.commit
       - name: publish tag
         id: publish_tag
@@ -24,18 +24,18 @@ jobs:
           git push --follow-tags
           echo ::set-output name=tag_name::$(git describe HEAD --abbrev=0)
       - name: create release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           release_name: Release ${{ steps.publish_tag.outputs.tag_name }}
           tag_name: ${{ steps.publish_tag.outputs.tag_name }}
           body_path: RELEASE_BODY.md
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@v2
+      - name: publish
+        uses: actions/setup-node@v2
         with:
-          node-version: 12
-          registry-url: https://registry.npmjs.org/
-      - run: npm install
-      - run: npm publish
+            node-version: 12
+            registry-url: https://registry.npmjs.org/
+        run: npm install && npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
