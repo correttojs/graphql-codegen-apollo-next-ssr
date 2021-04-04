@@ -18,11 +18,6 @@ jobs:
         run: |
           git push --follow-tags origin master && npm install && npm publish
           echo ::set-output name=tag_name::$(git describe HEAD --abbrev=0)
-      - name: create release
-        uses: actions/create-release@v1
         env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          release_name: Release ${{ steps.publish_tag.outputs.tag_name }}
-          tag_name: ${{ steps.publish_tag.outputs.tag_name }}
-          body_path: RELEASE_BODY.md
