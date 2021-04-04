@@ -20,7 +20,7 @@ jobs:
       - name: publish tag
         id: publish_tag
         run: |
-          git push --follow-tags origin master && npm install && npm publish
+          git push --follow-tags origin main && npm install && npm publish
           echo ::set-output name=tag_name::$(git describe HEAD --abbrev=0)
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
