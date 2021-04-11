@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/compare/v1.5.6...v1.6.0) (2021-04-11)
+
+
+### Features
+
+* add apollo state key ([a2159df](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/commit/a2159df8f4fdaba81f9e4daf4c5e59e5a098074d))
+
 ### [1.5.6](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/compare/v1.5.5...v1.5.6) (2021-04-04)
 
 ### [1.5.5](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/compare/v1.5.4...v1.5.5) (2021-04-04)
