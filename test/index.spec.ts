@@ -219,7 +219,7 @@ export async function getServerPageFeed
 
         return {
             props: {
-                apolloState,
+                apolloState: apolloState,
                 data: data?.data,
                 error: data?.error ?? data?.errors ?? null,
             },
@@ -289,7 +289,7 @@ export async function getServerPagefeed
 
         return {
             props: {
-                apolloState,
+                apolloState: apolloState,
                 data: data?.data,
                 error: data?.error ?? data?.errors ?? null,
             },
@@ -397,7 +397,7 @@ export async function getServerPagePageFeedQuery
 
         return {
             props: {
-                apolloState,
+                apolloState: apolloState,
                 data: data?.data,
                 error: data?.error ?? data?.errors ?? null,
             },
@@ -413,6 +413,54 @@ export async function getServerPagePageFeedQuery
   const options = optionsFunc ? optionsFunc(router) : {};
   return useQuery(PageFeedQueryDocument, options);
 };`);
+    await validateTypeScript(content, schema, docs, {});
+  });
+
+  it("Should generate getServerPage with custom `apolloStateKey`", async () => {
+    const documents = parse(/* GraphQL */ `
+      query feed {
+        feed {
+          id
+          commentCount
+          repository {
+            full_name
+            html_url
+            owner {
+              avatar_url
+            }
+          }
+        }
+      }
+    `);
+    const docs = [{ location: "", document: documents }];
+
+    const content = (await plugin(
+      schema,
+      docs,
+      {
+        apolloStateKey: "__APOLLO_STATE__",
+      },
+      {
+        outputFile: "graphql.tsx",
+      }
+    )) as Types.ComplexPluginOutput;
+    expect(content.content).toBeSimilarStringTo(`
+    export async function getServerPageFeed
+    (options: Omit<Apollo.QueryOptions<FeedQueryVariables>, 'query'>, apolloClient: Apollo.ApolloClient<NormalizedCacheObject> ){
+        
+      const data = await apolloClient.query<FeedQuery>({ ...options, query: FeedDocument });
+
+      const apolloState = apolloClient.cache.extract();
+
+      return {
+        props: {
+          __APOLLO_STATE__: apolloState,
+          data: data?.data,
+          error: data?.error ?? data?.errors ?? null,
+        },
+      };
+    }`);
+      
     await validateTypeScript(content, schema, docs, {});
   });
 });

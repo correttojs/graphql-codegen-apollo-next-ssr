@@ -26,6 +26,7 @@ generates:
       # customDataIdFromObjectName: 'test'
       # customDataIdFromObjectImport: 'abc'
       apolloClientInstanceImport: '../withApollo'
+      # apolloStateKey: '__APOLLO_STATE__'
     preset: import-types
     presetConfig:
       typesPath: ./graphql

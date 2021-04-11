@@ -13,6 +13,7 @@ By declaring a top level query we can save rendering time and provide a simpler 
 - `apolloCacheImportFrom` (default: apollo-cache-inmemory): apollo-cache-inmemory dependency
 - `apolloImportFrom` (default: apollo-client v2 or @apollo/client v3): apollo client dependency
 - `apolloCacheImportFrom` (default: apollo-cache-inmemory v2 or @apollo/client v3): apollo cache client dependency
+- `apolloStateKey` (default: apolloState): Key used for storing Apollo state
 - `withHooks` (default: false): Customized the output by enabling/disabling the generated React Hooks.
 - `withHOC` (default: true):  Customized the output by enabling/disabling the HOC.
 - `customImports` (default: ''): full custom import declaration
