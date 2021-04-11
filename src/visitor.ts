@@ -71,6 +71,7 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
           ? "@apollo/client"
           : "apollo-cache-inmemory"
       ),
+      apolloStateKey: getConfigValue(rawConfig.apolloStateKey, 'apolloState'),
       reactImport: getConfigValue(
         rawConfig.reactImport,
         `import type React from 'react';`
@@ -203,7 +204,7 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
 
         return {
             props: {
-                apolloState,
+                ${this.config.apolloStateKey}: apolloState,
                 data: data?.data,
                 error: data?.error ?? data?.errors ?? null,
             },

@@ -123,6 +123,12 @@ export type Config = {
   apolloClientInstanceImport?: string;
 
   /**
+   * @description Key used for storing Apollo state
+   * @default "apolloState"
+   */
+  apolloStateKey?: string;
+
+  /**
    * @description Custom React import
    */
   reactImport?: string;
