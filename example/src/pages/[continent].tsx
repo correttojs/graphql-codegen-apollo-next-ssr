@@ -17,10 +17,10 @@ const HomePage: PageGetCountriesByCodeComp = (props) => {
   );
 };
 
-export const getStaticProps: GetServerSideProps = async ({ params }) => {
+export const getStaticProps: GetServerSideProps = async ({ params, req }) => {
   const res = await ssrGetCountriesByCode.getServerPage({
     variables: { code: params?.continent?.toString().toUpperCase() || "" },
-  });
+  }, { req });
 
   if (res.props.error || !res.props.data?.countries?.length) {
     return {
@@ -31,7 +31,7 @@ export const getStaticProps: GetServerSideProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { props } = await ssrGetContinents.getServerPage({}, null);
+  const { props } = await ssrGetContinents.getServerPage({}, { req: undefined });
   const paths =
     props?.data?.continents.map((continent) => ({
       params: { continent: continent.code },

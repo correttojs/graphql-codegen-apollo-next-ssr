@@ -1,3 +1,4 @@
+import { GetServerSideProps } from 'next';
 import { PageGetContinentsComp, ssrGetContinents } from "../generated/page";
 import Link from "next/link";
 import { withApollo } from "../withApollo";
@@ -17,8 +18,8 @@ const ContinentPage: PageGetContinentsComp = () => {
   );
 };
 
-export const getServerSideProps = async () => {
-  return await ssrGetContinents.getServerPage({});
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  return await ssrGetContinents.getServerPage({}, ctx);
 };
 
 export default withApollo(ContinentPage);

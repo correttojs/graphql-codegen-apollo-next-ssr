@@ -20,6 +20,8 @@ generates:
       importDocumentNodeExternallyFrom: ./graphql
       reactApolloVersion: 3
       withHooks: true
+      contextType: 'ApolloClientContext'
+      contextTypeRequired: true
       # withHOC: false
       # excludePatterns: 'getComments'
       # excludePatternsOptions: 'i'
