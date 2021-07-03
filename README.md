@@ -17,6 +17,8 @@ By declaring a top level query we can save rendering time and provide a simpler 
 - `withHooks` (default: false): Customized the output by enabling/disabling the generated React Hooks.
 - `withHOC` (default: true):  Customized the output by enabling/disabling the HOC.
 - `customImports` (default: ''): full custom import declaration
+- `contextType` (default: 'any'): Contex type passed to getApolloClient
+- `contextTypeRequired` (default: false): If the context should be required when called from getServerSideProps
 - `pre` (default: ''): custom code before each function
 - `post` (default: ''):  custom code after each function
 - `apolloClientInstanceImport`(default: ''): Add apolloClient instance imports

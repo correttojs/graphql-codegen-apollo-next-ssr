@@ -118,6 +118,16 @@ export type Config = {
   customImports?: string;
 
   /**
+   * @description Add custom typing to context paramter
+   */
+  contextType?: string
+
+  /**
+   * @description Whether the caller is required to pass a context
+   */
+  contextTypeRequired?: boolean;
+
+  /**
    * @description Add apolloClient instance imports
    */
   apolloClientInstanceImport?: string;

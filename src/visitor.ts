@@ -65,6 +65,12 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
         rawConfig.apolloClientInstanceImport,
         ""
       ),
+      contextType: getConfigValue(
+        rawConfig.contextType, "any"
+      ),
+      contextTypeRequired: getConfigValue(
+        !!rawConfig.contextTypeRequired, false
+      ),
       apolloCacheImportFrom: getConfigValue(
         rawConfig.apolloCacheImportFrom,
         rawConfig.reactApolloVersion === 3
@@ -102,7 +108,7 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
 
     if (this.config.apolloClientInstanceImport) {
       this.imports.add(
-        `import { getApolloClient} from '${this.config.apolloClientInstanceImport}';`
+        `import { getApolloClient ${this.config.contextType ? ', ' + this.config.contextType : ''}} from '${this.config.apolloClientInstanceImport}';`
       );
     }
     if (!this.config.apolloClientInstanceImport) {
@@ -187,7 +193,7 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
     const getSSP = `export async function getServerPage${pageOperation}
     (options: Omit<Apollo.QueryOptions<${operationVariablesTypes}>, 'query'>, ${
       this.config.apolloClientInstanceImport
-        ? "ctx? :any"
+        ? `ctx${this.config.contextTypeRequired ? '' : '?'}: ${this.config.contextType}`
         : "apolloClient: Apollo.ApolloClient<NormalizedCacheObject>"
     } ){
         ${
