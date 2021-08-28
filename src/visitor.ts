@@ -136,7 +136,7 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
     operationResultType: string,
     operationVariablesTypes: string
   ): string {
-    const operationName: string = this.convertName(node.name.value, {
+    const operationName: string = this.convertName(node, {
       useTypesPrefix: false,
     });
 
