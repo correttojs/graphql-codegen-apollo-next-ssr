@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/compare/v1.6.1...v1.7.0) (2021-08-29)
+
+
+### Features
+
+* add custom context type for getApolloClient ([29d2464](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/commit/29d2464a43cbb79668d1fd0ae68b4b3ae38cee8a))
+
+
+### Bug Fixes
+
+* **deps:** update dependency next to v11 [security] ([a6a1b95](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/commit/a6a1b95a17bf36b19478cd12719e828919d8fa4e))
+* pass full node into `convertName` to resolve `operationName` ([dfa2906](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/commit/dfa2906c8835f884ae7eee8920ec38598d762dd7))
+
 ### [1.6.1](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/compare/v1.6.0...v1.6.1) (2021-05-06)
 
 
