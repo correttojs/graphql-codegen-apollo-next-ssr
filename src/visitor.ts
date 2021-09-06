@@ -108,7 +108,7 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
 
     if (this.config.apolloClientInstanceImport) {
       this.imports.add(
-        `import { getApolloClient ${this.config.contextType ? ', ' + this.config.contextType : ''}} from '${this.config.apolloClientInstanceImport}';`
+        `import { getApolloClient ${this.config.contextType !== 'any' ? ', ' + this.config.contextType : ''}} from '${this.config.apolloClientInstanceImport}';`
       );
     }
     if (!this.config.apolloClientInstanceImport) {
