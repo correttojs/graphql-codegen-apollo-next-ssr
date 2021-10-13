@@ -4,7 +4,6 @@ import {
   ClientSideBasePluginConfig,
   getConfigValue,
   LoadedFragment,
-  OMIT_TYPE,
   DocumentMode,
 } from "@graphql-codegen/visitor-plugin-common";
 
@@ -96,11 +95,15 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
     if (this.config.withHOC) {
       this.imports.add(`import { NextPage } from 'next';`);
     }
-    this.imports.add(`import { NextRouter, useRouter } from 'next/router'`);
+    if (this.config.withHOC || this.config.withHooks) {
+      this.imports.add(`import { NextRouter, useRouter } from 'next/router'`);
+    }    
+    if (this.config.withHooks) {
+      this.imports.add(
+        `import { QueryHookOptions, useQuery } from '${this.config.apolloReactHooksImportFrom}';`
+      );
+    }
 
-    this.imports.add(
-      `import { QueryHookOptions, useQuery } from '${this.config.apolloReactHooksImportFrom}';`
-    );
     this.imports.add(
       `import * as Apollo from '${this.config.apolloImportFrom}';`
     );
