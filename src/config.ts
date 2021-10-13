@@ -5,7 +5,7 @@ import { RawClientSideBasePluginConfig } from "@graphql-codegen/visitor-plugin-c
  *
  * It extends the basic TypeScript plugins: `@graphql-codegen/typescript`, `@graphql-codegen/typescript-operations` - and thus shares a similar configuration.
  */
-export type ApolloNextSSRRawPluginConfig = RawClientSideBasePluginConfig &
+export type ApolloNextSSRRawPluginConfig = Omit<RawClientSideBasePluginConfig, 'importDocumentNodeExternallyFrom'> &
   Config;
 
 export type Config = {
@@ -142,4 +142,32 @@ export type Config = {
    * @description Custom React import
    */
   reactImport?: string;
+
+  /**
+   * @default ""
+   * @description This config should be used if `documentMode` is `external`. This has 3 usage:
+   * - any string: This would be the path to import document nodes from. This can be used if we want to manually create the document nodes e.g. Use `graphql-tag` in a separate file and export the generated document
+   * - 'near-operation-file': This is a special mode that is intended to be used with `near-operation-file` preset to import document nodes from those files. If these files are `.graphql` files, we make use of webpack loader.
+   * - 'same-file': This is a special mode that is intended to be used with the `typescript-operations` & `typescript-react-apollo` plugins to generate document nodes in the same files.
+   *
+   * @exampleMarkdown
+   * ```yml
+   * config:
+   *   documentMode: external
+   *   importDocumentNodeExternallyFrom: path/to/document-node-file
+   * ```
+   *
+   * ```yml
+   * config:
+   *   documentMode: external
+   *   importDocumentNodeExternallyFrom: near-operation-file
+   * ```
+   * 
+   * ```yml
+   * config:
+   *   documentMode: external
+   *   importDocumentNodeExternallyFrom: same-file
+   * ```
+   */
+  importDocumentNodeExternallyFrom?: string;
 };
