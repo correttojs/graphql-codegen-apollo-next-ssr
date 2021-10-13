@@ -98,7 +98,7 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
     if (this.config.withHOC || this.config.withHooks) {
       this.imports.add(`import { NextRouter, useRouter } from 'next/router'`);
     }    
-    if (this.config.withHooks) {
+    if (this.config.withHOC || this.config.withHooks) {
       this.imports.add(
         `import { QueryHookOptions, useQuery } from '${this.config.apolloReactHooksImportFrom}';`
       );
