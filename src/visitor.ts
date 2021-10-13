@@ -123,7 +123,11 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
       this.imports.add(this.config.customImports);
     }
 
-    const baseImports = super.getImports();
+    let baseImports = super.getImports();
+    if (this.config.importDocumentNodeExternallyFrom === 'same-file') {
+      baseImports = baseImports.filter(importStr => !importStr.startsWith('import * as Operations from '))
+    }
+
     const hasOperations = this._collectedOperations.length > 0;
 
     if (!hasOperations) {
@@ -134,7 +138,7 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
   }
 
   private getDocumentNodeVariable(documentVariableName: string): string {
-    return this.config.documentMode === DocumentMode.external
+    return this.config.documentMode === DocumentMode.external && this.config.importDocumentNodeExternallyFrom !== 'same-file'
       ? `Operations.${documentVariableName}`
       : documentVariableName;
   }
