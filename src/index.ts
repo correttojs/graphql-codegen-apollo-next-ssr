@@ -63,7 +63,7 @@ export const validate: PluginValidateFn<any> = async (
   outputFile: string
 ) => {
   if (extname(outputFile) !== ".tsx") {
-    throw new Error(`Plugin "react-apollo" requires extension to be ".tsx"!`);
+    throw new Error(`Plugin "apollo-next-ssr" requires extension to be ".tsx"!`);
   }
 };
 
