@@ -9,7 +9,7 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0 # gives standard-version access to all previous commits
       - name: generate tag and release body
