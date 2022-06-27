@@ -4,6 +4,7 @@ import {
   PluginFunction,
   PluginValidateFn,
   Types,
+  oldVisit,
 } from "@graphql-codegen/plugin-helpers";
 import { LoadedFragment } from "@graphql-codegen/visitor-plugin-common";
 import { RawClientSideBasePluginConfig } from "@graphql-codegen/visitor-plugin-common";
@@ -12,7 +13,6 @@ import {
   GraphQLSchema,
   Kind,
   concatAST,
-  visit,
 } from "graphql";
 
 import { ApolloNextSSRVisitor } from "./visitor";
@@ -29,9 +29,11 @@ export const plugin: PluginFunction<
   const allAst = concatAST(documents.map((v) => v.document));
 
   const allFragments: LoadedFragment[] = [
-    ...(allAst.definitions.filter(
-      (d) => d.kind === Kind.FRAGMENT_DEFINITION
-    ) as FragmentDefinitionNode[]).map((fragmentDef) => ({
+    ...(
+      allAst.definitions.filter(
+        (d) => d.kind === Kind.FRAGMENT_DEFINITION
+      ) as FragmentDefinitionNode[]
+    ).map((fragmentDef) => ({
       node: fragmentDef,
       name: fragmentDef.name.value,
       onType: fragmentDef.typeCondition.name.value,
@@ -46,7 +48,7 @@ export const plugin: PluginFunction<
     config,
     documents
   );
-  let visitorResult = visit(allAst, { leave: visitor });
+  let visitorResult = oldVisit(allAst, { leave: visitor });
 
   return {
     prepend: visitor.getImports(),
@@ -63,7 +65,9 @@ export const validate: PluginValidateFn<any> = async (
   outputFile: string
 ) => {
   if (extname(outputFile) !== ".tsx") {
-    throw new Error(`Plugin "apollo-next-ssr" requires extension to be ".tsx"!`);
+    throw new Error(
+      `Plugin "apollo-next-ssr" requires extension to be ".tsx"!`
+    );
   }
 };
 
