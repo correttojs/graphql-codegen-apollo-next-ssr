@@ -1,5 +1,11 @@
+# ⚠ Maintaner needed ⚠
+ 
+An alternative solution based on `swr` and `gql-request` can be found [here](https://github.com/correttojs/swr-gql)
+
+
 # graphql-codegen-apollo-next-ssr
 Generate apollo code for nextjs ssr
+
 
 ## Motivations
 
