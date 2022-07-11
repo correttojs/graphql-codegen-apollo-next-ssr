@@ -236,7 +236,7 @@ export async function getServerPageFeed
                 return <WrappedComponent {...props} data={data} error={error} /> ;
                    
             }; `);
-      expect(content.content).not.toBeSimilarStringTo(`
+      expect(content.content).not.toContain(`
     export const useFeed`);
       await validateTypeScript(content, schema, docs, {});
     });
