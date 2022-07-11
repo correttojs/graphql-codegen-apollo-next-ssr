@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.4](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/compare/v1.7.3...v1.7.4) (2022-07-11)
+
+
+### Bug Fixes
+
+* jest 28 ([bb4db0e](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/commit/bb4db0ef4f03c7c2a0f115e1bb258f2d7ef7a3cf))
+
 ### [1.7.3](https://github.com/correttojs/graphql-codegen-apollo-next-ssr/compare/v1.7.2...v1.7.3) (2022-07-04)
 
 
