@@ -1,11 +1,21 @@
 name: CI
 on: push
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: 
+      run: |
+        yarn install
+        yarn build
+        yarn test
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Install modules
-      run: npm install
-    - name: Run tests
-      run: npm run test
+    - name: 
+      run: |
+        cd example
+        yarn install
+        yarn build
