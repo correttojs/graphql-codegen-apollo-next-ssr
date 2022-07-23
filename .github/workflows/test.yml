@@ -10,12 +10,6 @@ jobs:
         yarn install
         yarn build
         yarn test
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: 
-      run: |
         cd example
         yarn install
         yarn build
