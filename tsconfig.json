@@ -8,7 +8,11 @@
     "moduleResolution": "node",
     "jsx": "preserve",
     "outDir": "build",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
-  "exclude": ["node_modules", "example"]
+  "exclude": [
+    "node_modules",
+    "example"
+  ]
 }
