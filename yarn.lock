@@ -681,19 +681,7 @@
     tslib "~2.0.0"
     upper-case "2.0.1"
 
-"@graphql-codegen/plugin-helpers@^2.3.1", "@graphql-codegen/plugin-helpers@^2.5.0", "@graphql-codegen/plugin-helpers@^2.6.0":
-  version "2.6.0"
-  resolved "https://registry.npmjs.org/@graphql-codegen/plugin-helpers/-/plugin-helpers-2.6.0.tgz"
-  integrity sha512-z8uw6GdUvtKyt5YSijtj1yRqI0A2lBWdGIgTjgXaAKqSC+InlVBy+89859LlKNMrO7somdt44cbMys8r4Hbqeg==
-  dependencies:
-    "@graphql-tools/utils" "^8.8.0"
-    change-case-all "1.0.14"
-    common-tags "1.8.2"
-    import-from "4.0.0"
-    lodash "~4.17.0"
-    tslib "~2.4.0"
-
-"@graphql-codegen/plugin-helpers@^2.6.1":
+"@graphql-codegen/plugin-helpers@^2.3.1", "@graphql-codegen/plugin-helpers@^2.5.0", "@graphql-codegen/plugin-helpers@^2.6.0", "@graphql-codegen/plugin-helpers@^2.6.1":
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/plugin-helpers/-/plugin-helpers-2.6.1.tgz#0e3abf1a13843abecd1d795fe85a61b7459a7e3a"
   integrity sha512-RbkCPu8rZo+d3tWPUzqnZhgGutp15GVcs9UhaOcenKpCDDQxNxqGGTn76LuAAymT9y7BSnXdY20k1CW59z4nTw==
@@ -1072,14 +1060,14 @@
     value-or-promise "^1.0.11"
     ws "^8.3.0"
 
-"@graphql-tools/utils@8.8.0", "@graphql-tools/utils@^8.6.5", "@graphql-tools/utils@^8.8.0":
+"@graphql-tools/utils@8.8.0":
   version "8.8.0"
   resolved "https://registry.npmjs.org/@graphql-tools/utils/-/utils-8.8.0.tgz"
   integrity sha512-KJrtx05uSM/cPYFdTnGAS1doL5bftJLAiFCDMZ8Vkifztz3BFn3gpFiy/o4wDtM8s39G46mxmt2Km/RmeltfGw==
   dependencies:
     tslib "^2.4.0"
 
-"@graphql-tools/utils@8.9.0", "@graphql-tools/utils@^8.9.0":
+"@graphql-tools/utils@8.9.0", "@graphql-tools/utils@^8.6.5", "@graphql-tools/utils@^8.8.0", "@graphql-tools/utils@^8.9.0":
   version "8.9.0"
   resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-8.9.0.tgz#c6aa5f651c9c99e1aca55510af21b56ec296cdb7"
   integrity sha512-pjJIWH0XOVnYGXCqej8g/u/tsfV4LvLlj0eATKQu5zwnxd/TiTHq7Cg313qUPTFFHZ3PP5wJ15chYVtLDwaymg==
