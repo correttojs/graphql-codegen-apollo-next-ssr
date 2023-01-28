@@ -15,8 +15,8 @@
     "url": "https://github.com/correttojs/graphql-codegen-apollo-next-ssr"
   },
   "dependencies": {
-    "@graphql-codegen/plugin-helpers": "^2.3.1",
-    "@graphql-codegen/visitor-plugin-common": "^2.9.1",
+    "@graphql-codegen/plugin-helpers": "^3.1.2",
+    "@graphql-codegen/visitor-plugin-common": "^2.13.7",
     "auto-bind": "~4.0.0"
   },
   "peerDependencies": {
@@ -24,13 +24,13 @@
   },
   "main": "build/src/index.js",
   "devDependencies": {
-    "@graphql-codegen/cli": "2.11.7",
-    "@graphql-codegen/fragment-matcher": "3.3.1",
-    "@graphql-codegen/import-types-preset": "2.2.3",
-    "@graphql-codegen/introspection": "2.2.1",
-    "@graphql-codegen/testing": "1.17.7",
-    "@graphql-codegen/typescript": "2.7.3",
-    "@graphql-codegen/typescript-operations": "2.5.3",
+    "@graphql-codegen/cli": "2.16.4",
+    "@graphql-codegen/fragment-matcher": "3.3.3",
+    "@graphql-codegen/import-types-preset": "2.2.6",
+    "@graphql-codegen/introspection": "2.2.3",
+    "@graphql-codegen/testing": "1.18.2",
+    "@graphql-codegen/typescript": "2.8.7",
+    "@graphql-codegen/typescript-operations": "2.5.12",
     "@graphql-codegen/typescript-react-apollo": "3.3.7",
     "@types/jest": "29.4.4",
     "@types/node": "18.15.3",
