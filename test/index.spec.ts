@@ -50,7 +50,7 @@ describe("Apollo Next SSr", () => {
       { outputFile: "" }
     );
     const merged = mergeOutputs([tsOutput, tsDocumentsOutput, output]);
-    validateTs(merged, undefined, true, false, playground);
+    validateTs(merged, undefined, true, false, [], playground);
 
     return merged;
   };
@@ -220,6 +220,7 @@ export async function getServerPageFeed
         return {
             props: {
                 apolloState: apolloState,
+                apolloOptions: options,
                 data: data?.data,
                 error: data?.error ?? data?.errors ?? null,
             },
@@ -290,6 +291,7 @@ export async function getServerPagefeed
         return {
             props: {
                 apolloState: apolloState,
+                apolloOptions: options,
                 data: data?.data,
                 error: data?.error ?? data?.errors ?? null,
             },
@@ -398,6 +400,7 @@ export async function getServerPagePageFeedQuery
         return {
             props: {
                 apolloState: apolloState,
+                apolloOptions: options,
                 data: data?.data,
                 error: data?.error ?? data?.errors ?? null,
             },
@@ -455,6 +458,7 @@ export async function getServerPagePageFeedQuery
       return {
         props: {
           __APOLLO_STATE__: apolloState,
+          apolloOptions: options,
           data: data?.data,
           error: data?.error ?? data?.errors ?? null,
         },

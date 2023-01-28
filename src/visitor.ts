@@ -218,6 +218,7 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
         return {
             props: {
                 ${this.config.apolloStateKey}: apolloState,
+                apolloOptions: options,
                 data: data?.data,
                 error: data?.error ?? data?.errors ?? null,
             },
