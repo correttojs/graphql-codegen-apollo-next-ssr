@@ -30,7 +30,7 @@
     "@graphql-codegen/introspection": "2.2.1",
     "@graphql-codegen/testing": "1.17.7",
     "@graphql-codegen/typescript": "2.7.3",
-    "@graphql-codegen/typescript-operations": "2.5.3",
+    "@graphql-codegen/typescript-operations": "2.5.13",
     "@graphql-codegen/typescript-react-apollo": "3.3.7",
     "@types/jest": "29.4.0",
     "@types/node": "18.11.18",
