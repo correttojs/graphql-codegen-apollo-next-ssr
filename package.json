@@ -33,7 +33,7 @@
     "@graphql-codegen/typescript-operations": "2.5.3",
     "@graphql-codegen/typescript-react-apollo": "3.3.7",
     "@types/jest": "29.5.0",
-    "@types/node": "18.15.7",
+    "@types/node": "18.15.10",
     "apollo-cache-inmemory": "1.6.6",
     "apollo-client": "2.6.10",
     "graphql": "16.6.0",
