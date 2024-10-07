@@ -15,8 +15,8 @@
     "url": "https://github.com/correttojs/graphql-codegen-apollo-next-ssr"
   },
   "dependencies": {
-    "@graphql-codegen/plugin-helpers": "^2.3.1",
-    "@graphql-codegen/visitor-plugin-common": "^2.9.1",
+    "@graphql-codegen/plugin-helpers": "^5.0.0",
+    "@graphql-codegen/visitor-plugin-common": "^5.0.0",
     "auto-bind": "~4.0.0"
   },
   "peerDependencies": {
@@ -24,14 +24,14 @@
   },
   "main": "build/src/index.js",
   "devDependencies": {
-    "@graphql-codegen/cli": "2.11.7",
-    "@graphql-codegen/fragment-matcher": "3.3.1",
-    "@graphql-codegen/import-types-preset": "2.2.3",
-    "@graphql-codegen/introspection": "2.2.1",
-    "@graphql-codegen/testing": "1.17.7",
-    "@graphql-codegen/typescript": "2.7.3",
-    "@graphql-codegen/typescript-operations": "2.5.3",
-    "@graphql-codegen/typescript-react-apollo": "3.3.7",
+    "@graphql-codegen/cli": "5.0.3",
+    "@graphql-codegen/fragment-matcher": "5.0.2",
+    "@graphql-codegen/import-types-preset": "3.0.0",
+    "@graphql-codegen/introspection": "4.0.3",
+    "@graphql-codegen/testing": "3.0.4",
+    "@graphql-codegen/typescript": "4.1.0",
+    "@graphql-codegen/typescript-operations": "4.3.0",
+    "@graphql-codegen/typescript-react-apollo": "4.3.2",
     "@types/jest": "29.5.6",
     "@types/node": "18.18.6",
     "apollo-cache-inmemory": "1.6.6",
